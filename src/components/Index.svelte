@@ -1,66 +1,55 @@
 <script>
-	import { insert } from "$utils/supabase.js";
+	import Birthdays from "$components/Birthdays.svelte";
+	import Guesses from "$components/Guesses.svelte";
+	import People from "$components/People.svelte";
+	import { load } from "$utils/supabase.js";
+	import { onMount } from "svelte";
+	import { createClient } from "@supabase/supabase-js";
 
-	let name;
-	let month;
-	let day;
+	const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
+	const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
+	const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
-	const submit = async () => {
-		const { success, error } = await insert({
-			data: { first_name: name, birthday: `1990-${month}-${day}` },
-			table: "birthdays"
-		});
+	let view;
 
-		if (error) {
-			console.error("Error inserting row:", error);
-		} else if (success) {
-			console.log("Row inserted.");
+	const handleUpdate = (payload) => {
+		if (payload.eventType === "UPDATE") {
+			view = payload.new.view;
 		}
 	};
+
+	onMount(async () => {
+		const userView = await load({ table: "user_view" });
+		view = userView[0]?.view;
+		supabase
+			.channel("user_view")
+			.on(
+				"postgres_changes",
+				{ event: "UPDATE", schema: "public", table: "user_view" },
+				handleUpdate
+			)
+			.subscribe();
+	});
 </script>
 
-<section>
+<div class="user">
 	<h2>User</h2>
 
-	<form on:submit|preventDefault={submit}>
-		<label for="first-name">First Name</label>
-		<input id="first-name" type="text" bind:value={name} required />
-
-		<label for="birthday">Month</label>
-		<input
-			id="birth-month"
-			type="text"
-			placeholder="MM"
-			bind:value={month}
-			required
-		/>
-
-		<label for="birthday">Day</label>
-		<input
-			id="birth-day"
-			type="text"
-			placeholder="DD"
-			bind:value={day}
-			required
-		/>
-
-		<button type="submit">Submit</button>
-	</form>
-</section>
+	{#if view === "birthdays"}
+		<Birthdays />
+	{:else if view === "guesses"}
+		<Guesses />
+	{:else if view === "people"}
+		<People />
+	{/if}
+</div>
 
 <style>
-	section {
+	.user {
 		max-width: 800px;
 		margin: 0 auto;
 		display: flex;
 		flex-direction: column;
 		align-items: center;
-	}
-	form {
-		display: flex;
-		flex-direction: column;
-	}
-	button {
-		margin: 1rem 0;
 	}
 </style>

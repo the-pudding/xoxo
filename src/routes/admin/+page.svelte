@@ -1,74 +1,45 @@
 <script>
-	import { load } from "$utils/supabase.js";
+	import Birthdays from "$routes/admin/Birthdays.svelte";
+	import ButtonSet from "$components/helpers/ButtonSet.svelte";
+	import { load, update } from "$utils/supabase.js";
 	import { onMount } from "svelte";
-	import { createClient } from "@supabase/supabase-js";
 
-	let birthdays = [];
+	let view;
+	const options = [
+		{ label: "Gather guesses", value: "guesses" },
+		{ label: "Gather birthdays", value: "birthdays" },
+		{ label: "Show people", value: "people" }
+	];
 
-	const handleInserts = (payload) => {
-		console.log("Change received!", payload);
-
-		if (payload.eventType === "INSERT") {
-			birthdays = [...birthdays, payload.new];
-		}
+	const updateUserView = async () => {
+		if (!view) return;
+		await update({
+			table: "user_view",
+			column: "view",
+			value: view
+		});
 	};
 
-	onMount(async () => {
-		const data = await load();
-		birthdays = data.birthdays;
+	$: view, updateUserView();
 
-		const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
-		const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
-		const supabase = createClient(supabaseUrl, supabaseAnonKey);
-		supabase
-			.channel("birthdays")
-			.on(
-				"postgres_changes",
-				{ event: "INSERT", schema: "public", table: "birthdays" },
-				handleInserts
-			)
-			.subscribe();
+	onMount(async () => {
+		const userView = await load({ table: "user_view" });
+		view = userView[0]?.view;
 	});
 </script>
 
-<section>
+<div class="admin">
 	<h2>Admin</h2>
-
-	<h4>Birthdays 🎈</h4>
-
-	<table>
-		<tr>
-			<th>id</th>
-			<th>created_at</th>
-			<th>first_name</th>
-			<th>birthday</th>
-		</tr>
-		{#each birthdays as { id, created_at, first_name, birthday }}
-			<tr>
-				<td>{id}</td>
-				<td>{created_at}</td>
-				<td>{first_name}</td>
-				<td>{birthday}</td>
-			</tr>
-		{/each}
-	</table>
-</section>
+	<ButtonSet legend={"Set User View"} {options} bind:value={view} />
+	<Birthdays />
+</div>
 
 <style>
-	section {
+	.admin {
 		max-width: 800px;
 		margin: 0 auto;
-	}
-	tr:nth-child(even) {
-		background-color: var(--color-gray-100);
-	}
-	th {
-		font-weight: bold;
-		background-color: var(--color-gray-800);
-		color: white;
-	}
-	td,
-	th {
-		padding: 0.5rem;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
 	}
 </style>
