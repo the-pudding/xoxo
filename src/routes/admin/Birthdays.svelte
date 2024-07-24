@@ -16,7 +16,6 @@
 	};
 
 	onMount(async () => {
-		// load + subscribe to birthdays
 		birthdays = await load({ table: "birthdays" });
 		supabase
 			.channel("birthdays")

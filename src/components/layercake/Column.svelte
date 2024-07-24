@@ -1,37 +1,67 @@
+<!--
+  @component
+  Generates an SVG column chart.
+ -->
 <script>
 	import { getContext } from "svelte";
 
-	const { data, xGet, yGet, yRange, xScale } = getContext("LayerCake");
+	const { data, xGet, yGet, x, yRange, xScale, y, height } =
+		getContext("LayerCake");
+
+	/** @type {String} [fill='#00e047'] - The shape's fill color. */
+	export let fill = "#00e047";
+
+	/** @type {String} [stroke='#000'] - The shape's stroke color. */
+	export let stroke = "#000";
+
+	/** @type {Number} [strokeWidth=0] - The shape's stroke width. */
+	export let strokeWidth = 0;
+
+	/** @type {Boolean} [false] - Show the numbers for each column */
+	export let showLabels = false;
 
 	$: columnWidth = (d) => {
 		const vals = $xGet(d);
-		return Math.max(0, vals[1] - vals[0]);
+		return Math.abs(vals[1] - vals[0]);
 	};
 
 	$: columnHeight = (d) => {
 		return $yRange[0] - $yGet(d);
 	};
-
-	export let fill = "#ccc";
-	export let stroke = "#000";
-	export let strokeWidth = 0;
 </script>
 
-<g>
+<g class="column-group">
 	{#each $data as d, i}
-		{@const x = $xScale.bandwidth ? $xGet(d) : $xGet(d)[0]}
-		{@const y = $yGet(d)}
-		{@const width = $xScale.bandwidth ? $xScale.bandwidth() : columnWidth(d)}
-		{@const height = columnHeight(d)}
+		{@const colHeight = columnHeight(d)}
+		{@const xGot = $xGet(d)}
+		{@const xPos = Array.isArray(xGot) ? xGot[0] : xGot}
+		{@const colWidth = $xScale.bandwidth ? $xScale.bandwidth() : columnWidth(d)}
+		{@const yValue = $y(d)}
 		<rect
+			class="group-rect"
 			data-id={i}
-			{x}
-			{y}
-			{width}
-			{height}
+			data-range={$x(d)}
+			data-count={yValue}
+			x={xPos}
+			y={$yGet(d)}
+			width={colWidth}
+			height={colHeight}
 			{fill}
 			{stroke}
 			stroke-width={strokeWidth}
 		/>
+		{#if showLabels && yValue}
+			<text
+				x={xPos + colWidth / 2}
+				y={$height - colHeight - 5}
+				text-anchor="middle">{yValue}</text
+			>
+		{/if}
 	{/each}
 </g>
+
+<style>
+	text {
+		font-size: 12px;
+	}
+</style>

@@ -1,5 +1,6 @@
 <script>
 	import Birthdays from "$routes/admin/Birthdays.svelte";
+	import Guesses from "$routes/admin/Guesses.svelte";
 	import ButtonSet from "$components/helpers/ButtonSet.svelte";
 	import { load, update } from "$utils/supabase.js";
 	import { onMount } from "svelte";
@@ -31,6 +32,7 @@
 <div class="admin">
 	<h2>Admin</h2>
 	<ButtonSet legend={"Set User View"} {options} bind:value={view} />
+	<Guesses />
 	<Birthdays />
 </div>
 
