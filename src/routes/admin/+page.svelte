@@ -1,6 +1,6 @@
 <script>
-	import Birthdays from "$routes/admin/Birthdays.svelte";
-	import Guesses from "$routes/admin/Guesses.svelte";
+	import Demo from "$routes/demo/+page.svelte";
+	import User from "$components/Index.svelte";
 	import ButtonSet from "$components/helpers/ButtonSet.svelte";
 	import { load, update } from "$utils/supabase.js";
 	import { onMount } from "svelte";
@@ -30,5 +30,26 @@
 </script>
 
 <ButtonSet legend={"Set User View"} {options} bind:value={view} />
-<Guesses />
-<Birthdays />
+
+<h3>On people's phones</h3>
+<div class="box">
+	<User />
+</div>
+<h3>On the big screen</h3>
+<div class="box">
+	<Demo />
+</div>
+
+<style>
+	h3 {
+		margin-top: 3rem;
+	}
+	.box {
+		width: 100%;
+		padding: 1rem;
+		border: 3px solid black;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+	}
+</style>

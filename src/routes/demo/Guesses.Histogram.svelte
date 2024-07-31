@@ -33,35 +33,49 @@
 	});
 </script>
 
-<div class="chart-container">
-	<LayerCake
-		padding={{ top: 20, right: 5, bottom: 20, left: 30 }}
-		x={xKey}
-		y={yKey}
-		xDomain={thresholds}
-		xScale={scaleBand().paddingInner(0)}
-		yDomain={[0, null]}
-		data={binnedData}
-	>
-		<Svg>
-			<AxisX
-				gridlines={false}
-				baseline
-				ticks={slimThresholds}
-				formatTick={(d) => +f(d)}
-			/>
-			<AxisY gridlines={false} ticks={3} />
-			<Column fill="var(--color-red)" stroke="none" />
-		</Svg>
-	</LayerCake>
+<div class="histogram">
+	<div class="title">
+		How many people do we need for a 90% chance of a birthday match?
+	</div>
+	<div class="subtitle">XOXO 2024's guesses</div>
+	<div class="chart-container">
+		<LayerCake
+			padding={{ top: 20, right: 5, bottom: 20, left: 30 }}
+			x={xKey}
+			y={yKey}
+			xDomain={thresholds}
+			xScale={scaleBand().paddingInner(0)}
+			yDomain={[0, null]}
+			data={binnedData}
+		>
+			<Svg>
+				<AxisX
+					gridlines={false}
+					baseline
+					ticks={slimThresholds}
+					formatTick={(d) => +f(d)}
+				/>
+				<AxisY gridlines={false} ticks={3} />
+				<Column fill="var(--color-red)" stroke="none" />
+			</Svg>
+		</LayerCake>
+	</div>
 </div>
 
 <style>
 	.chart-container {
 		width: 100%;
-		height: 250px;
+		height: 300px;
 	}
 	input {
 		height: auto;
+	}
+	.title {
+		font-size: 1.5rem;
+		font-weight: bold;
+	}
+	.subtitle {
+		color: var(--color-gray-800);
+		margin: 0.5rem 0;
 	}
 </style>

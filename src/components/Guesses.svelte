@@ -24,7 +24,7 @@
 	<h2>How many people would it take to get a birthday match?</h2>
 	<h4>Your Guess: <span>{guess}</span></h4>
 	<div class="range">
-		<Range min={0} max={1000} step={1} showTicks={false} bind:value={guess} />
+		<Range min={0} max={366} step={1} showTicks={false} bind:value={guess} />
 	</div>
 	<button on:click={submit}>Submit</button>
 </section>

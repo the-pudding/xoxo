@@ -1,5 +1,5 @@
 <script>
-	import Histogram from "$routes/admin/Guesses.Histogram.svelte";
+	import Histogram from "$routes/demo/Guesses.Histogram.svelte";
 	import { onMount } from "svelte";
 	import { load } from "$utils/supabase.js";
 	import { createClient } from "@supabase/supabase-js";
@@ -29,8 +29,6 @@
 			.subscribe();
 	});
 </script>
-
-<h4>Guesses 🤷🏽‍♀️</h4>
 
 {#if guesses.length > 0}
 	<Histogram data={guesses.map((d) => d.guess)} />
