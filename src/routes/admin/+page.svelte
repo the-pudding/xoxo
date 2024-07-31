@@ -9,7 +9,7 @@
 	const options = [
 		{ label: "Gather guesses", value: "guesses" },
 		{ label: "Gather birthdays", value: "birthdays" },
-		{ label: "Show people", value: "people" }
+		{ label: "Visualize", value: "viz" }
 	];
 
 	const updateUserView = async () => {
@@ -29,19 +29,6 @@
 	});
 </script>
 
-<div class="admin">
-	<h2>Admin</h2>
-	<ButtonSet legend={"Set User View"} {options} bind:value={view} />
-	<Guesses />
-	<Birthdays />
-</div>
-
-<style>
-	.admin {
-		max-width: 800px;
-		margin: 0 auto;
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-	}
-</style>
+<ButtonSet legend={"Set User View"} {options} bind:value={view} />
+<Guesses />
+<Birthdays />

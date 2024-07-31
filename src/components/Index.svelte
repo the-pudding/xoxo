@@ -1,7 +1,6 @@
 <script>
 	import Birthdays from "$components/Birthdays.svelte";
 	import Guesses from "$components/Guesses.svelte";
-	import People from "$components/People.svelte";
 	import { load } from "$utils/supabase.js";
 	import { onMount } from "svelte";
 	import { createClient } from "@supabase/supabase-js";
@@ -32,24 +31,10 @@
 	});
 </script>
 
-<div class="user">
-	<h2>User</h2>
-
-	{#if view === "birthdays"}
-		<Birthdays />
-	{:else if view === "guesses"}
-		<Guesses />
-	{:else if view === "people"}
-		<People />
-	{/if}
-</div>
-
-<style>
-	.user {
-		max-width: 800px;
-		margin: 0 auto;
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-	}
-</style>
+{#if view === "birthdays"}
+	<Birthdays />
+{:else if view === "guesses"}
+	<Guesses />
+{:else if view === "viz"}
+	<div>Look up at the screen.</div>
+{/if}

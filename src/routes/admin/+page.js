@@ -1,4 +1,4 @@
 export async function load() {
-	const title = "User";
+	const title = "Admin";
 	return { title };
 }
