@@ -1,0 +1,1 @@
+import{P as l}from"../chunks/_page.9JMmocLA.js";async function e(){return{title:"Demo"}}const o=Object.freeze(Object.defineProperty({__proto__:null,load:e},Symbol.toStringTag,{value:"Module"}));export{l as component,o as universal};
