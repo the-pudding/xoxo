@@ -35,6 +35,4 @@
 	<Birthdays />
 {:else if view === "guesses"}
 	<Guesses />
-{:else if view === "viz"}
-	<div>Look up at the screen.</div>
-{/if}
+{:else if view === "viz"}{/if}

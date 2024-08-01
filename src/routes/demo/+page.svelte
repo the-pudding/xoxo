@@ -3,22 +3,17 @@
 	import { onMount } from "svelte";
 	import { createClient } from "@supabase/supabase-js";
 	import Guesses from "$routes/demo/Guesses.svelte";
+	import Birthdays from "$routes/demo/Birthdays.svelte";
 
 	const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
 	const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
 	const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
 	let view;
-	let birthdays = [];
 
-	const handleUpdate = (payload) => {
+	const handleViewUpdate = (payload) => {
 		if (payload.eventType === "UPDATE") {
 			view = payload.new.view;
-		}
-	};
-	const handleInserts = (payload) => {
-		if (payload.eventType === "INSERT") {
-			birthdays = [...birthdays, payload.new];
 		}
 	};
 
@@ -30,17 +25,7 @@
 			.on(
 				"postgres_changes",
 				{ event: "UPDATE", schema: "public", table: "user_view" },
-				handleUpdate
-			)
-			.subscribe();
-
-		birthdays = await load({ table: "birthdays" });
-		supabase
-			.channel("birthdays")
-			.on(
-				"postgres_changes",
-				{ event: "INSERT", schema: "public", table: "birthdays" },
-				handleInserts
+				handleViewUpdate
 			)
 			.subscribe();
 	});
@@ -49,7 +34,7 @@
 {#if view === "guesses"}
 	<Guesses />
 {:else if view === "birthdays"}
-	<h2><strong>{birthdays.length}</strong> birthdays entered 🎈</h2>
+	<Birthdays />
 {:else if view === "viz"}{/if}
 
 <style>

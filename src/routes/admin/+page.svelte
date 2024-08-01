@@ -9,7 +9,7 @@
 	const options = [
 		{ label: "Gather guesses", value: "guesses" },
 		{ label: "Gather birthdays", value: "birthdays" },
-		{ label: "Visualize", value: "viz" }
+		{ label: "Simulation", value: "simulation" }
 	];
 
 	const updateUserView = async () => {

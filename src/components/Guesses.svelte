@@ -21,7 +21,7 @@
 </script>
 
 <section>
-	<h2>How many people would it take to get a birthday match?</h2>
+	<h2>How many people do we need for a 90% chance of a birthday match?</h2>
 	<h4>Your Guess: <span>{guess}</span></h4>
 	<div class="range">
 		<Range min={0} max={366} step={1} showTicks={false} bind:value={guess} />

@@ -19,14 +19,11 @@ export const insert = async ({ table, data }) => {
 };
 
 export const update = async ({ table, column, value, id }) => {
-	console.log({ table, column, value });
 	const response = await supabase
 		.from(table)
 		.update({ [column]: value })
 		.eq("id", 1)
 		.select();
-
-	console.log({ response });
 
 	if (response.error) {
 		console.log(response.error);

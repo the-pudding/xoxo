@@ -4,7 +4,8 @@
 	export let legendPosition = "top";
 	export let labelClass = "";
 	export let disabled = false;
-	export let value = options.length ? options[0].value : "";
+	export let value;
+	// export let value = options.length ? options[0].value : "";
 
 	const id = `legend-${Math.floor(Math.random() * 1000000)}`;
 	const makeSlug = (str = "") => `${str}`.toLowerCase().replace(/\W/g, "");
