@@ -9,30 +9,30 @@
 	const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
 	const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
-	let view;
+	let userView;
 
 	const handleUpdate = (payload) => {
 		if (payload.eventType === "UPDATE") {
-			view = payload.new.view;
+			userView = payload.new.user_view;
 		}
 	};
 
 	onMount(async () => {
-		const userView = await load({ table: "user_view" });
-		view = userView[0]?.view;
+		const view = await load({ table: "view" });
+		userView = view[0]?.user_view;
 		supabase
-			.channel("user_view")
+			.channel("view")
 			.on(
 				"postgres_changes",
-				{ event: "UPDATE", schema: "public", table: "user_view" },
+				{ event: "UPDATE", schema: "public", table: "view" },
 				handleUpdate
 			)
 			.subscribe();
 	});
 </script>
 
-{#if view === "birthdays"}
+{#if userView === "birthdays"}
 	<Birthdays />
-{:else if view === "guesses"}
+{:else if userView === "guesses"}
 	<Guesses />
-{:else if view === "viz"}{/if}
+{:else if userView === "viz"}{/if}

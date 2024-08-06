@@ -4,6 +4,8 @@
 	export let max = 100;
 	export let step = 1;
 	export let showTicks = false;
+	export let ticks = [];
+	export let formatTick = (d) => d;
 	export let value = min;
 	export let label = "";
 
@@ -13,13 +15,13 @@
 	};
 
 	$: decimals = getDecimalCount(step);
-	$: ticks = showTicks ? range(min, max + step, step) : [];
+	$: ticks = ticks ? ticks : showTicks ? range(min, max + step, step) : [];
 </script>
 
 <div class="range">
 	<div class="ticks">
 		{#each ticks as tick}
-			<span class="tick">{format(`.${decimals}f`)(tick)}</span>
+			<span class="tick">{formatTick(format(`.${decimals}f`)(tick))}</span>
 		{/each}
 	</div>
 	<input type="range" aria-label={label} {min} {max} {step} bind:value />
@@ -83,7 +85,9 @@
 	}
 
 	input[type="range"]::-moz-range-thumb {
-		box-shadow: 1px 1px 1px var(--color-black), 0 0 1px var(--color-black);
+		box-shadow:
+			1px 1px 1px var(--color-black),
+			0 0 1px var(--color-black);
 		height: var(--thumb-width);
 		width: var(--thumb-width);
 		border-radius: 50%;
@@ -104,7 +108,9 @@
 		background: var(--color-gray-300);
 		border: 0.2px solid var(--color-black);
 		border-radius: 4px;
-		box-shadow: 1px 1px 1px var(--color-black), 0 0 1px var(--color-black);
+		box-shadow:
+			1px 1px 1px var(--color-black),
+			0 0 1px var(--color-black);
 	}
 
 	input[type="range"]::-ms-thumb {

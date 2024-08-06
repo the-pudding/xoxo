@@ -21,10 +21,20 @@
 </script>
 
 <section>
-	<h2>How many people do we need for a 90% chance of a birthday match?</h2>
-	<h4>Your Guess: <span>{guess}</span></h4>
+	<h2>Should Matt take the bet?</h2>
+	<h4>
+		If we ask 50 people for their birthdays, how likely are we to get a match?
+	</h4>
+	<h4>Your Guess: <span>{guess}%</span></h4>
 	<div class="range">
-		<Range min={0} max={366} step={1} showTicks={false} bind:value={guess} />
+		<Range
+			min={0}
+			max={100}
+			step={1}
+			ticks={[0, 50, 100]}
+			formatTick={(d) => `${d}%`}
+			bind:value={guess}
+		/>
 	</div>
 	<button on:click={submit}>Submit</button>
 </section>
@@ -42,7 +52,9 @@
 	button {
 		margin: 1rem 0;
 	}
-	h2 {
+	h2,
+	h3,
+	h4 {
 		text-align: center;
 	}
 </style>

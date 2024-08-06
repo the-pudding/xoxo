@@ -10,9 +10,8 @@
 	const f = format(".0f");
 	const xKey = ["x0", "x1"];
 	const yKey = "length";
-	const binCount = 10; /* TODO make this dynamic */
-
-	$: domain = extent(data);
+	const binCount = 100;
+	const domain = [0, 100];
 
 	const calcThresholds = (domain = [0, 1], n) => {
 		const breaks = [domain[0]];
@@ -35,7 +34,7 @@
 
 <div class="histogram">
 	<div class="title">
-		How many people do we need for a 90% chance of a birthday match?
+		If we ask 50 people for their birthdays, how likely are to get a match?
 	</div>
 	<div class="subtitle">XOXO 2024's guesses</div>
 	<div class="chart-container">
