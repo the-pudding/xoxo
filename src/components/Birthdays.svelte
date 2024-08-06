@@ -4,24 +4,39 @@
 	let name;
 	let month;
 	let day;
+	let submitted = false;
+	let errorMessage;
 
 	const submit = async () => {
-		const { success, error } = await insert({
-			data: { first_name: name, birthday: `1990-${month}-${day}` },
-			table: "birthdays"
-		});
+		errorMessage = undefined;
 
-		if (error) {
-			console.error("Error inserting row:", error);
-		} else if (success) {
-			console.log("Row inserted.");
+		try {
+			await insert({
+				data: {
+					first_name: name.toLowerCase(),
+					birthday: `1990-${month}-${day}`
+				},
+				table: "birthdays"
+			});
+
+			submitted = true;
+		} catch (error) {
+			console.log(error);
+			errorMessage = error;
 		}
 	};
 </script>
 
 <form on:submit|preventDefault={submit}>
 	<label for="first-name">First Name</label>
-	<input id="first-name" type="text" bind:value={name} required />
+	<input
+		id="first-name"
+		type="text"
+		bind:value={name}
+		required
+		maxlength="10"
+		disabled={submitted}
+	/>
 
 	<label for="birthday">Month</label>
 	<input
@@ -30,6 +45,8 @@
 		placeholder="MM"
 		bind:value={month}
 		required
+		maxlength="2"
+		disabled={submitted}
 	/>
 
 	<label for="birthday">Day</label>
@@ -39,9 +56,15 @@
 		placeholder="DD"
 		bind:value={day}
 		required
+		maxlength="2"
+		disabled={submitted}
 	/>
 
-	<button type="submit">Submit</button>
+	<button type="submit" disabled={submitted}>Submit</button>
+
+	{#if errorMessage}
+		<div class="error">{errorMessage}</div>
+	{/if}
 </form>
 
 <style>
@@ -51,5 +74,8 @@
 	}
 	button {
 		margin: 1rem 0;
+	}
+	.error {
+		color: var(--color-red);
 	}
 </style>

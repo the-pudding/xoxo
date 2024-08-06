@@ -3,19 +3,20 @@
 	import { insert } from "$utils/supabase.js";
 
 	let guess;
+	let submitted = false;
 
 	const submit = async () => {
-		if (guess <= 0) return;
+		if (!guess || guess <= 0) return;
 
-		const { success, error } = await insert({
+		const { error } = await insert({
 			data: { guess },
 			table: "guesses"
 		});
 
 		if (error) {
 			console.error("Error inserting row:", error);
-		} else if (success) {
-			console.log("Row inserted.");
+		} else {
+			submitted = true;
 		}
 	};
 </script>
@@ -34,9 +35,10 @@
 			ticks={[0, 50, 100]}
 			formatTick={(d) => `${d}%`}
 			bind:value={guess}
+			disabled={submitted}
 		/>
 	</div>
-	<button on:click={submit}>Submit</button>
+	<button on:click={submit} disabled={submitted}>Submit</button>
 </section>
 
 <style>

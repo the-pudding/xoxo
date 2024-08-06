@@ -12,8 +12,15 @@ export const load = async ({ table }) => {
 export const insert = async ({ table, data }) => {
 	const response = await supabase.from(table).insert(data);
 	if (response.error) {
-		console.log(response.error);
-		throw new Error("insert failed");
+		if (table === "birthdays") {
+			if (response.error.code === "22008") {
+				throw new Error("Date out of range.");
+			} else if (response.error.code === "22007") {
+				throw new Error("Invalid date syntax.");
+			}
+		} else {
+			throw new Error("insert failed");
+		}
 	}
 	return true;
 };

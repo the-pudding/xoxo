@@ -8,6 +8,7 @@
 	export let formatTick = (d) => d;
 	export let value = min;
 	export let label = "";
+	export let disabled = false;
 
 	const getDecimalCount = (value) => {
 		if (Math.floor(value) === value) return 0;
@@ -24,7 +25,15 @@
 			<span class="tick">{formatTick(format(`.${decimals}f`)(tick))}</span>
 		{/each}
 	</div>
-	<input type="range" aria-label={label} {min} {max} {step} bind:value />
+	<input
+		type="range"
+		aria-label={label}
+		{min}
+		{max}
+		{step}
+		bind:value
+		{disabled}
+	/>
 </div>
 
 <style>
