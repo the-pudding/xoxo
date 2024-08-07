@@ -10,10 +10,7 @@
 
 	const trackRound = () => {
 		if (!data) return;
-
-		console.log({ data });
 		if (data.some((d) => d.hasMatch)) {
-			console.log("match found");
 			successes += 1;
 		}
 		numSimulations += 1;
