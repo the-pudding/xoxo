@@ -1,30 +1,41 @@
 <script>
 	import { getContext } from "svelte";
+	import _ from "lodash";
 
-	const { data, xGet, xScale, yScale } = getContext("LayerCake");
+	const { data, xGet, yScale } = getContext("LayerCake");
 
-	const r = 8;
-	const h = 30;
+	const rx = 10;
+	const ry = 16;
+
+	const colors = [
+		"var(--color-green)",
+		"var(--color-blue)",
+		"var(--color-red)",
+		"var(--color-yellow)",
+		"var(--color-purple)"
+	];
 </script>
 
 {#each $data as d}
-	<circle
-		fill="var(--color-green)"
-		{r}
-		cx={$xGet(d)}
-		cy={$yScale(0) - r - h}
-		opacity={0.6}
-	/>
+	{@const fill = _.sample(colors)}
+	{@const cx = $xGet(d)}
+	{@const cy = $yScale(0) - ry - 3}
+	<ellipse {fill} {rx} {ry} {cx} {cy} />
+	<ellipse {fill} rx={3} ry={10} cx={cx - 5} cy={cy + 9} />
+	<ellipse {fill} rx={3} ry={10} cx={cx + 5} cy={cy + 9} />
+
+	<circle fill="var(--color-black)" r="1.5" cx={cx - 3} cy={cy - 4} />
+	<circle fill="var(--color-black)" r="1.5" cx={cx + 3} cy={cy - 4} />
 	<line
-		stroke="var(--color-green)"
-		stroke-width="2"
-		x1={$xGet(d)}
-		y1={$yScale(0)}
-		x2={$xGet(d)}
-		y2={$yScale(0) - h}
-		opacity={0.6}
+		stroke="var(--color-black)"
+		stroke-width="1"
+		x1={cx - 4}
+		y1={cy + 4}
+		x2={cx + 4}
+		y2={cy + 4}
 	/>
-	<text x={$xGet(d)} y={$yScale(0) - r - h - 12}>{d.first_name}</text>
+
+	<text x={cx} y={cy - ry - 5}>{d.first_name}</text>
 {/each}
 
 <style>

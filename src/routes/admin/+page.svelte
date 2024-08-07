@@ -27,12 +27,12 @@
 			value: userView
 		});
 
-		showResults = false;
-		await update({
-			table: "view",
-			column: "show_results",
-			value: false
-		});
+		// showResults = false;
+		// await update({
+		// 	table: "view",
+		// 	column: "show_results",
+		// 	value: false
+		// });
 	};
 	const updateShowResults = async () => {
 		await update({
