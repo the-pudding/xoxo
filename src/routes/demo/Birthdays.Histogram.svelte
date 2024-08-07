@@ -6,6 +6,8 @@
 	import { timeFormat, timeParse } from "d3-time-format";
 
 	export let data = [];
+	export let title;
+	export let subtitle;
 
 	const xKey = "birthday";
 	const yKey = "id";
@@ -27,33 +29,35 @@
 	}));
 </script>
 
-<div class="histogram">
-	<div class="title">XOXO 2024's birthdays</div>
-	<div class="subtitle">Is there a birthday match?</div>
-	<div class="subtitle" style="text-align: center">🎉 = shared birthday</div>
+{#if data.length > 0}
+	<div class="histogram">
+		{#if title}<div class="title">{title}</div>{/if}
+		{#if subtitle}<div class="subtitle">{subtitle}</div>{/if}
+		<div class="subtitle" style="text-align: center">🎉 = shared birthday</div>
 
-	<div class="chart-container">
-		<LayerCake
-			padding={{ top: 0, right: 25, bottom: 50, left: 25 }}
-			x={xKey}
-			y={yKey}
-			xScale={scaleBand().paddingInner(0.02)}
-			xDomain={dates}
-			yDomain={[0, null]}
-			{data}
-		>
-			<Svg>
-				<AxisX
-					ticks={xTicks}
-					gridlines={false}
-					format={formatDate}
-					baseline={true}
-				/>
-				<People />
-			</Svg>
-		</LayerCake>
+		<div class="chart-container">
+			<LayerCake
+				padding={{ top: 0, right: 25, bottom: 50, left: 25 }}
+				x={xKey}
+				y={yKey}
+				xScale={scaleBand().paddingInner(0.02)}
+				xDomain={dates}
+				yDomain={[0, null]}
+				{data}
+			>
+				<Svg>
+					<AxisX
+						ticks={xTicks}
+						gridlines={false}
+						format={formatDate}
+						baseline={true}
+					/>
+					<People />
+				</Svg>
+			</LayerCake>
+		</div>
 	</div>
-</div>
+{/if}
 
 <style>
 	.histogram {

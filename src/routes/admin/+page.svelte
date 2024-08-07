@@ -125,6 +125,8 @@
 		<input type="number" bind:value={simulationN} placeholder="N" />
 		<button on:click={runSimulation}>Run</button>
 	</div>
+
+	<button>Reset simulations</button>
 {/if}
 
 <hr />

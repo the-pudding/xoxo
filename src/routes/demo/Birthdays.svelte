@@ -29,6 +29,8 @@
 	});
 </script>
 
-{#if birthdays.length > 0}
-	<Histogram data={birthdays} />
-{/if}
+<Histogram
+	title={"XOXO 2024's birthdays"}
+	subtitle={"Will there be a birthday match?"}
+	data={birthdays}
+/>

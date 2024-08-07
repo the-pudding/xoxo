@@ -11,6 +11,7 @@
 
 	let view = "guesses";
 	let showResults;
+	let simulationData;
 
 	const receiveMessage = (msg) => {
 		if (msg.event === "view") {
@@ -18,6 +19,13 @@
 		} else if (msg.event === "show-results") {
 			showResults = msg.payload;
 		} else if (msg.event === "simulation-n") {
+			simulationData = msg.payload.birthdays;
+			simulationData = simulationData.map((d) => ({
+				...d,
+				hasMatch: !!simulationData.find(
+					(m) => m.birthday === d.birthday && m.id !== d.id
+				)
+			}));
 		}
 	};
 
@@ -48,7 +56,7 @@
 		<h2>Enter your birthday</h2>
 	{/if}
 {:else if view === "simulation"}
-	<Simulation />
+	<Simulation data={simulationData} />
 {/if}
 
 <style>

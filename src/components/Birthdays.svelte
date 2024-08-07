@@ -19,7 +19,7 @@
 				table: "birthdays"
 			});
 
-			//submitted = true;
+			submitted = true;
 		} catch (error) {
 			console.log(error);
 			errorMessage = error;
@@ -64,6 +64,8 @@
 
 	{#if errorMessage}
 		<div class="error">{errorMessage}</div>
+	{:else if submitted}
+		<div class="success">Submitted!</div>
 	{/if}
 </form>
 
@@ -76,6 +78,15 @@
 		margin: 1rem 0;
 	}
 	.error {
-		color: var(--color-red);
+		background: var(--color-red);
+		color: white;
+	}
+	.success {
+		background: var(--color-green);
+	}
+	.error,
+	.success {
+		padding: 0 4px;
+		width: fit-content;
 	}
 </style>
