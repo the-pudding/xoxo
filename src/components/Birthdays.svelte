@@ -19,7 +19,7 @@
 				table: "birthdays"
 			});
 
-			submitted = true;
+			//submitted = true;
 		} catch (error) {
 			console.log(error);
 			errorMessage = error;

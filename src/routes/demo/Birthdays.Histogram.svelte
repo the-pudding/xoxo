@@ -22,13 +22,15 @@
 
 	$: data = data.map((d) => ({
 		...d,
-		birthday: parseDate(d.birthday)
+		birthday: parseDate(d.birthday),
+		hasMatch: !!data.find((m) => m.birthday === d.birthday && m.id !== d.id)
 	}));
 </script>
 
 <div class="histogram">
 	<div class="title">XOXO 2024's birthdays</div>
-	<div class="subtitle">Is there a birthday pair?</div>
+	<div class="subtitle">Is there a birthday match?</div>
+	<div class="subtitle" style="text-align: center">🎉 = shared birthday</div>
 
 	<div class="chart-container">
 		<LayerCake
