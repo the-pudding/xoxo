@@ -1,7 +1,6 @@
 <script>
 	import Birthdays from "$components/Birthdays.svelte";
 	import Guesses from "$components/Guesses.svelte";
-	import { load } from "$utils/supabase.js";
 	import { onMount } from "svelte";
 	import { createClient } from "@supabase/supabase-js";
 
@@ -9,25 +8,28 @@
 	const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
 	const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
-	let userView;
+	let view = "guesses"; // TODO: remove
 
-	const receiveMessage = (payload) => {
-		console.log("user message received", payload);
+	const receiveMessage = (msg) => {
+		if (msg.event === "view") {
+			view = msg.payload;
+		}
 	};
 
 	onMount(async () => {
+		// TODO: ask for the most recent view
 		const userChannel = supabase.channel("user");
 		userChannel
-			.on("broadcast", { event: "view" }, (payload) => receiveMessage(payload))
+			.on("broadcast", { event: "view" }, (msg) => receiveMessage(msg))
 			.subscribe();
 	});
 </script>
 
-{#if userView === "birthdays"}
+{#if view === "birthdays"}
 	<Birthdays />
-{:else if userView === "guesses"}
+{:else if view === "guesses"}
 	<Guesses />
-{:else if userView === "simulation"}
+{:else if view === "simulation"}
 	<p>Nothing to see here</p>
 	<p>Maybe light up people's phone's who are birthday matches?</p>
 {/if}

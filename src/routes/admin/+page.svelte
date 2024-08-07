@@ -3,9 +3,10 @@
 	import User from "$components/Index.svelte";
 	import Toggle from "$components/helpers/Toggle.svelte";
 	import ButtonSet from "$components/helpers/ButtonSet.svelte";
-	import { load, update } from "$utils/supabase.js";
+	import { load } from "$utils/supabase.js";
 	import { createClient } from "@supabase/supabase-js";
 	import { onMount } from "svelte";
+	import _ from "lodash";
 
 	const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
 	const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
@@ -14,7 +15,7 @@
 	let view = "guesses";
 	let showResults;
 	let simulationN;
-
+	let birthdays;
 	let userChannel;
 	let demoChannel;
 	let userChannelConnected = false;
@@ -45,8 +46,7 @@
 	};
 
 	$: view, updateView();
-	// $: showResults, updateShowResults();
-	// $: simulationN, updateSimulationN();
+	$: showResults, updateShowResults();
 
 	const updateView = () => {
 		if (!userChannel || !demoChannel) return;
@@ -54,16 +54,36 @@
 		sendBroadcast({
 			channel: userChannel,
 			event: "view",
-			payload: { message: view }
+			payload: view
 		});
 		sendBroadcast({
 			channel: demoChannel,
 			event: "view",
-			payload: { message: view }
+			payload: view
+		});
+	};
+	const updateShowResults = () => {
+		if (!demoChannel) return;
+
+		sendBroadcast({
+			channel: demoChannel,
+			event: "show-results",
+			payload: showResults
+		});
+	};
+	const runSimulation = () => {
+		if (!demoChannel) return;
+
+		const simulationData = _.sampleSize(birthdays, simulationN);
+
+		sendBroadcast({
+			channel: demoChannel,
+			event: "simulation-n",
+			payload: { n: simulationN, birthdays: simulationData }
 		});
 	};
 
-	onMount(() => {
+	onMount(async () => {
 		userChannel = supabase.channel("user");
 		demoChannel = supabase.channel("demo");
 
@@ -76,6 +96,8 @@
 				}
 			});
 		});
+
+		birthdays = await load({ table: "birthdays" });
 	});
 </script>
 
@@ -101,7 +123,7 @@
 	<div class="input">
 		<div>Simulation with N people</div>
 		<input type="number" bind:value={simulationN} placeholder="N" />
-		<button>Run</button>
+		<button on:click={runSimulation}>Run</button>
 	</div>
 {/if}
 
