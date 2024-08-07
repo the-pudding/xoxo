@@ -4,10 +4,21 @@
 	import Toggle from "$components/helpers/Toggle.svelte";
 	import ButtonSet from "$components/helpers/ButtonSet.svelte";
 	import { load, update } from "$utils/supabase.js";
+	import { createClient } from "@supabase/supabase-js";
 	import { onMount } from "svelte";
 
-	let userView;
+	const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
+	const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
+	const supabase = createClient(supabaseUrl, supabaseAnonKey);
+
+	let view = "guesses";
 	let showResults;
+	let simulationN;
+
+	let userChannel;
+	let demoChannel;
+	let userChannelConnected = false;
+	let demoChannelConnected = false;
 
 	const viewOptions = [
 		{ label: "Gather votes", value: "guesses" },
@@ -19,49 +30,80 @@
 		{ value: false, text: "off" }
 	];
 
-	const updateUserView = async () => {
-		if (!userView) return;
-		await update({
-			table: "view",
-			column: "user_view",
-			value: userView
-		});
+	const sendBroadcast = ({ channel, event, payload }) => {
+		if (
+			(channel === userChannel && !userChannelConnected) ||
+			(channel === demoChannel && !demoChannelConnected)
+		)
+			return null;
 
-		// showResults = false;
-		// await update({
-		// 	table: "view",
-		// 	column: "show_results",
-		// 	value: false
-		// });
-	};
-	const updateShowResults = async () => {
-		await update({
-			table: "view",
-			column: "show_results",
-			value: showResults
+		channel.send({
+			type: "broadcast",
+			event: event,
+			payload: payload
 		});
 	};
-	$: userView, updateUserView();
-	$: showResults, updateShowResults();
 
-	onMount(async () => {
-		const view = await load({ table: "view" });
-		userView = view[0]?.user_view;
-		showResults = view[0]?.show_results;
+	$: view, updateView();
+	// $: showResults, updateShowResults();
+	// $: simulationN, updateSimulationN();
+
+	const updateView = () => {
+		if (!userChannel || !demoChannel) return;
+
+		sendBroadcast({
+			channel: userChannel,
+			event: "view",
+			payload: { message: view }
+		});
+		sendBroadcast({
+			channel: demoChannel,
+			event: "view",
+			payload: { message: view }
+		});
+	};
+
+	onMount(() => {
+		userChannel = supabase.channel("user");
+		demoChannel = supabase.channel("demo");
+
+		[userChannel, demoChannel].forEach((channel) => {
+			channel.subscribe((status) => {
+				if (status !== "SUBSCRIBED") return null;
+				else {
+					if (channel === userChannel) userChannelConnected = true;
+					if (channel === demoChannel) demoChannelConnected = true;
+				}
+			});
+		});
 	});
 </script>
 
-<ButtonSet
-	legend={"Set User View"}
-	options={viewOptions}
-	bind:value={userView}
-/>
-<Toggle
-	label="Show results"
-	style="inner"
-	options={toggleOptions}
-	bind:value={showResults}
-/>
+<div>
+	User Channel: {userChannelConnected ? "Connected ✅" : "Not connected 🚫"}
+</div>
+<div>
+	Demo Channel: {demoChannelConnected ? "Connected ✅" : "Not connected 🚫"}
+</div>
+
+<ButtonSet legend={"Set View"} options={viewOptions} bind:value={view} />
+
+{#if view === "guesses" || view === "birthdays"}
+	<Toggle
+		label="Show results in demo"
+		style="inner"
+		options={toggleOptions}
+		bind:value={showResults}
+	/>
+{/if}
+
+{#if view === "simulation"}
+	<div class="input">
+		<div>Simulation with N people</div>
+		<input type="number" bind:value={simulationN} placeholder="N" />
+		<button>Run</button>
+	</div>
+{/if}
 
 <hr />
 
@@ -88,5 +130,11 @@
 		width: 100%;
 		border: 1px solid var(--color-gray-400);
 		margin: 5rem 0;
+	}
+	.input {
+		text-align: center;
+	}
+	input {
+		width: 5rem;
 	}
 </style>

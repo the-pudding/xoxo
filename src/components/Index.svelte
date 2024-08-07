@@ -11,22 +11,14 @@
 
 	let userView;
 
-	const handleUpdate = (payload) => {
-		if (payload.eventType === "UPDATE") {
-			userView = payload.new.user_view;
-		}
+	const receiveMessage = (payload) => {
+		console.log("user message received", payload);
 	};
 
 	onMount(async () => {
-		const view = await load({ table: "view" });
-		userView = view[0]?.user_view;
-		supabase
-			.channel("view")
-			.on(
-				"postgres_changes",
-				{ event: "UPDATE", schema: "public", table: "view" },
-				handleUpdate
-			)
+		const userChannel = supabase.channel("user");
+		userChannel
+			.on("broadcast", { event: "view" }, (payload) => receiveMessage(payload))
 			.subscribe();
 	});
 </script>
@@ -35,4 +27,7 @@
 	<Birthdays />
 {:else if userView === "guesses"}
 	<Guesses />
-{:else if userView === "viz"}{/if}
+{:else if userView === "simulation"}
+	<p>Nothing to see here</p>
+	<p>Maybe light up people's phone's who are birthday matches?</p>
+{/if}
