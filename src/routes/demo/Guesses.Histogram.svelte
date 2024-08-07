@@ -1,35 +1,25 @@
 <script>
 	import { LayerCake, Svg, bin, takeEvery } from "layercake";
-	import { extent, scaleBand, format } from "d3";
+	import { scaleBand, format, range } from "d3";
 	import Column from "$components/layercake/Column.svelte";
 	import AxisX from "$components/layercake/AxisX.svg.svelte";
 	import AxisY from "$components/layercake/AxisY.svg.svelte";
+	import Line from "$routes/demo/Guesses.Line.svelte";
 
 	export let data = [];
 
 	const f = format(".0f");
 	const xKey = ["x0", "x1"];
 	const yKey = "length";
-	const binCount = 100;
 	const domain = [0, 100];
-
-	const calcThresholds = (domain = [0, 1], n) => {
-		const breaks = [domain[0]];
-		const brk = (domain[1] - domain[0]) / n;
-		while (breaks[breaks.length - 1] < domain[1]) {
-			const node = breaks[breaks.length - 1] + brk;
-			breaks.push(node);
-		}
-		return breaks;
-	};
-
-	$: thresholds = calcThresholds(domain, binCount);
-	$: slimThresholds = takeEvery(thresholds, 5);
+	const thresholds = range(100);
+	const ticks = takeEvery(thresholds, 4);
 
 	$: binnedData = bin(data, (d) => d, {
 		domain,
 		thresholds
 	});
+	$: average = Math.floor(data.reduce((a, b) => a + b, 0) / data.length);
 </script>
 
 <div class="histogram">
@@ -39,7 +29,7 @@
 	<div class="subtitle">XOXO 2024's guesses</div>
 	<div class="chart-container">
 		<LayerCake
-			padding={{ top: 20, right: 5, bottom: 20, left: 30 }}
+			padding={{ top: 40, right: 5, bottom: 20, left: 30 }}
 			x={xKey}
 			y={yKey}
 			xDomain={thresholds}
@@ -49,13 +39,15 @@
 		>
 			<Svg>
 				<AxisX
+					tickMarks={true}
 					gridlines={false}
 					baseline
-					ticks={slimThresholds}
+					{ticks}
 					formatTick={(d) => +f(d)}
 				/>
 				<AxisY gridlines={false} ticks={3} />
-				<Column fill="var(--color-red)" stroke="none" />
+				<Column stroke="none" />
+				<Line {average} />
 			</Svg>
 		</LayerCake>
 	</div>

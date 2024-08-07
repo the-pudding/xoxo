@@ -9,7 +9,7 @@
 		getContext("LayerCake");
 
 	/** @type {String} [fill='#00e047'] - The shape's fill color. */
-	export let fill = "#00e047";
+	export let fill;
 
 	/** @type {String} [stroke='#000'] - The shape's stroke color. */
 	export let stroke = "#000";
@@ -37,6 +37,7 @@
 		{@const xPos = Array.isArray(xGot) ? xGot[0] : xGot}
 		{@const colWidth = $xScale.bandwidth ? $xScale.bandwidth() : columnWidth(d)}
 		{@const yValue = $y(d)}
+		{@const value = d[0]}
 		<rect
 			class="group-rect"
 			data-id={i}
@@ -46,7 +47,7 @@
 			y={$yGet(d)}
 			width={colWidth}
 			height={colHeight}
-			{fill}
+			fill={fill || (value < 50 ? "var(--color-red)" : "var(--color-green)")}
 			{stroke}
 			stroke-width={strokeWidth}
 		/>
