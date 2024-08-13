@@ -1,4 +1,5 @@
 <script>
+	import Person from "$routes/demo/Birthdays.Person.svelte";
 	import { getContext } from "svelte";
 
 	const { data, xGet, yScale, width } = getContext("LayerCake");
@@ -6,34 +7,10 @@
 	const colors = ["blue", "green", "purple", "red", "yellow"];
 </script>
 
-{#each $data as d, i}
+{#each $data as d, i (d.id + "-" + i)}
+	{@const name = d.first_name}
 	{@const left = $xGet(d) + "px"}
-	<div class="group" style:left>
-		<div class="label">{d.first_name}</div>
-		<div
-			class="person"
-			style={`--img: url(/assets/demo/${colors[i % colors.length]}.png)`}
-		/>
-	</div>
+	{@const color = colors[i % colors.length]}
+	{@const isMatch = d.hasMatch}
+	<Person {name} {left} {color} {isMatch} />
 {/each}
-
-<style>
-	.group {
-		position: absolute;
-		bottom: 0;
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-	}
-	.person {
-		width: 32px; /* Half the original width of one sprite */
-		height: 70px; /* Half the original height of one sprite */
-		background-size: 128px 210px; /* Scale down the entire image by 50% */
-		background-position: 0 0; /* Top left corner of the image (first sprite) */
-		background-repeat: no-repeat;
-		background-image: var(--img);
-	}
-	.label {
-		font-size: 0.75rem;
-	}
-</style>
