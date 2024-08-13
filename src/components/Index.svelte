@@ -2,13 +2,14 @@
 	import Birthdays from "$components/Birthdays.svelte";
 	import Guesses from "$components/Guesses.svelte";
 	import { onMount } from "svelte";
+	import { load } from "$utils/supabase.js";
 	import { createClient } from "@supabase/supabase-js";
 
 	const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
 	const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
 	const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
-	let view = "guesses"; // TODO: remove
+	let view;
 
 	const receiveMessage = (msg) => {
 		if (msg.event === "view") {
@@ -17,11 +18,13 @@
 	};
 
 	onMount(async () => {
-		// TODO: ask for the most recent view
 		const userChannel = supabase.channel("user");
 		userChannel
 			.on("broadcast", { event: "view" }, (msg) => receiveMessage(msg))
 			.subscribe();
+
+		const dbView = await load({ table: "view" });
+		view = dbView[0].view;
 	});
 </script>
 

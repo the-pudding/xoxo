@@ -3,7 +3,7 @@
 	import User from "$components/Index.svelte";
 	import Toggle from "$components/helpers/Toggle.svelte";
 	import ButtonSet from "$components/helpers/ButtonSet.svelte";
-	import { load } from "$utils/supabase.js";
+	import { load, update } from "$utils/supabase.js";
 	import { createClient } from "@supabase/supabase-js";
 	import { onMount } from "svelte";
 	import _ from "lodash";
@@ -12,7 +12,7 @@
 	const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
 	const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
-	let view = "guesses";
+	let view;
 	let showResults;
 	let simulationN;
 	let birthdays;
@@ -48,7 +48,7 @@
 	$: view, updateView();
 	$: showResults, updateShowResults();
 
-	const updateView = () => {
+	const updateView = async () => {
 		if (!userChannel || !demoChannel) return;
 
 		sendBroadcast({
@@ -61,6 +61,8 @@
 			event: "view",
 			payload: view
 		});
+
+		await update({ table: "view", column: "view", value: view, id: 1 });
 	};
 	const updateShowResults = () => {
 		if (!demoChannel) return;
@@ -98,6 +100,9 @@
 		});
 
 		birthdays = await load({ table: "birthdays" });
+
+		const dbView = await load({ table: "view" });
+		view = dbView[0].view;
 	});
 </script>
 

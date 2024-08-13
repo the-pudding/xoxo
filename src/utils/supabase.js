@@ -29,7 +29,7 @@ export const update = async ({ table, column, value, id }) => {
 	const response = await supabase
 		.from(table)
 		.update({ [column]: value })
-		.eq("id", 1)
+		.eq("id", id)
 		.select();
 
 	if (response.error) {

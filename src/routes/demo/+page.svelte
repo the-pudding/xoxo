@@ -1,5 +1,6 @@
 <script>
 	import { onMount } from "svelte";
+	import { load } from "$utils/supabase.js";
 	import { createClient } from "@supabase/supabase-js";
 	import Guesses from "$routes/demo/Guesses.svelte";
 	import Birthdays from "$routes/demo/Birthdays.svelte";
@@ -9,7 +10,7 @@
 	const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
 	const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
-	let view = "guesses";
+	let view;
 	let showResults;
 	let simulationData;
 
@@ -40,6 +41,9 @@
 				receiveMessage(payload)
 			)
 			.subscribe();
+
+		const dbView = await load({ table: "view" });
+		view = dbView[0].view;
 	});
 </script>
 
