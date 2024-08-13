@@ -1,8 +1,8 @@
 <script>
-	import AxisX from "$components/layercake/AxisX.svg.svelte";
+	import AxisX from "$components/layercake/AxisX.html.svelte";
 	import People from "$routes/demo/Birthdays.People.svelte";
-	import { LayerCake, Svg } from "layercake";
-	import { scaleBand } from "d3-scale";
+	import { LayerCake, Svg, Html } from "layercake";
+	import { scaleBand, scaleLinear } from "d3-scale";
 	import { timeFormat, timeParse } from "d3-time-format";
 
 	export let data = [];
@@ -45,7 +45,7 @@
 				yDomain={[0, null]}
 				{data}
 			>
-				<Svg>
+				<Html>
 					<AxisX
 						ticks={xTicks}
 						gridlines={false}
@@ -53,7 +53,7 @@
 						baseline={true}
 					/>
 					<People />
-				</Svg>
+				</Html>
 			</LayerCake>
 		</div>
 	</div>
