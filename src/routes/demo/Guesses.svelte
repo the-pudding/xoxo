@@ -37,7 +37,7 @@
 
 	<div class="bottom">
 		<div class="qr-code">qr code</div>
-		<div>Go to <strong>pudding.cool/xoxo</strong> to participate!</div>
+		<div>Go to <strong>the-pudding.github.io/xoxo</strong> to participate!</div>
 	</div>
 </div>
 

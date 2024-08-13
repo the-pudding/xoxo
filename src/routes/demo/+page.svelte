@@ -57,7 +57,9 @@
 			If we ask 50 people for their birthdays, how likely are we to get a match?
 		</h4>
 
-		<h4>Go to <strong>pudding.cool/xoxo</strong> to make your guess! 🤔</h4>
+		<h4>
+			Go to <strong>the-pudding.github.io/xoxo</strong> to make your guess! 🤔
+		</h4>
 
 		<div class="qr-code">qr code</div>
 	{/if}
@@ -66,7 +68,8 @@
 		<Birthdays />
 	{:else}
 		<h4>
-			Go to <strong>pudding.cool/xoxo</strong> and tell us your birthday! 🎈
+			Go to <strong>the-pudding.github.io/xoxo</strong> and tell us your birthday!
+			🎈
 		</h4>
 		<div class="qr-code">qr code</div>
 	{/if}

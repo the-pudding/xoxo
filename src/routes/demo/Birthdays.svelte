@@ -20,7 +20,7 @@
 
 	const startDate = new Date(1990, 0, 1);
 	const formatDate = (d) => timeFormat("%b %d")(d);
-	const xTicks = [startDate, new Date(1990, 6, 2), new Date(1990, 11, 31)];
+	const dateTicks = [startDate, new Date(1990, 6, 2), new Date(1990, 11, 31)];
 
 	const allDates = Array.from({ length: 366 }, (_, i) => {
 		const date = new Date(startDate);
@@ -41,12 +41,23 @@
 	});
 </script>
 
-<Histogram
+<!-- <Histogram
 	title={"XOXO 2024's birthdays"}
-	subtitle={"Will there be a birthday match?"}
+	subtitle={"Sorted by astrological sign"}
 	data={birthdays}
 	xKey={(d) => d.astrologicalSign.i}
 	xDomain={_.range(0, 11)}
 	xTicks={_.range(0, 11)}
 	showMatches={false}
+/> -->
+
+<Histogram
+	title={"XOXO 2024's birthdays"}
+	subtitle={"Will there be a birthday match?"}
+	data={birthdays}
+	xKey={"birthday"}
+	xDomain={allDates}
+	xTicks={dateTicks}
+	formatTick={(d) => formatDate(d)}
+	showMatches={true}
 />

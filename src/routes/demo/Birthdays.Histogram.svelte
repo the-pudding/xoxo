@@ -25,8 +25,6 @@
 		hasMatch: !!data.find((m) => m.birthday === d.birthday && m.id !== d.id),
 		astrologicalSign: getAstrologicalSign(d.birthday)
 	}));
-
-	$: console.log(data);
 </script>
 
 {#if data.length > 0}
