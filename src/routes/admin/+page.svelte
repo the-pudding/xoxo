@@ -62,15 +62,22 @@
 			payload: view
 		});
 
-		await update({ table: "view", column: "view", value: view, id: 1 });
+		await update({ table: "state", column: "view", value: view, id: 1 });
 	};
-	const updateShowResults = () => {
+	const updateShowResults = async () => {
 		if (!demoChannel) return;
 
 		sendBroadcast({
 			channel: demoChannel,
 			event: "show-results",
 			payload: showResults
+		});
+
+		await update({
+			table: "state",
+			column: "show_results",
+			value: showResults,
+			id: 1
 		});
 	};
 	const runSimulation = () => {
@@ -101,8 +108,9 @@
 
 		birthdays = await load({ table: "birthdays" });
 
-		const dbView = await load({ table: "view" });
+		const dbView = await load({ table: "state" });
 		view = dbView[0].view;
+		showResults = dbView[0].show_results;
 	});
 </script>
 

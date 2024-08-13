@@ -23,7 +23,7 @@
 			.on("broadcast", { event: "view" }, (msg) => receiveMessage(msg))
 			.subscribe();
 
-		const dbView = await load({ table: "view" });
+		const dbView = await load({ table: "state" });
 		view = dbView[0].view;
 	});
 </script>

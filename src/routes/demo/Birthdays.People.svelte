@@ -2,7 +2,7 @@
 	import Person from "$routes/demo/Birthdays.Person.svelte";
 	import { getContext } from "svelte";
 
-	const { data, xGet, yScale, width } = getContext("LayerCake");
+	const { data, xGet } = getContext("LayerCake");
 
 	const colors = ["blue", "green", "purple", "red", "yellow"];
 </script>

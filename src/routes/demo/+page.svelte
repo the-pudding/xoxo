@@ -42,8 +42,9 @@
 			)
 			.subscribe();
 
-		const dbView = await load({ table: "view" });
+		const dbView = await load({ table: "state" });
 		view = dbView[0].view;
+		showResults = dbView[0].show_results;
 	});
 </script>
 

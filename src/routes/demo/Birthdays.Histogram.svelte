@@ -33,7 +33,7 @@
 	<div class="histogram">
 		{#if title}<div class="title">{title}</div>{/if}
 		{#if subtitle}<div class="subtitle">{subtitle}</div>{/if}
-		<div class="subtitle" style="text-align: center">🎉 = shared birthday</div>
+		<!-- <div class="subtitle" style="text-align: center">🎉 = shared birthday</div> -->
 
 		<div class="chart-container">
 			<LayerCake
