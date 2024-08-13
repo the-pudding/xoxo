@@ -1,30 +1,4 @@
-<!doctype html>
-<html lang="en">
-
-<head>
-	<meta charset="utf-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	
-		<link href="./_app/immutable/assets/0.DO8k2q4g.css" rel="stylesheet">
-		<link href="./_app/immutable/assets/Index.D6RSNTWi.css" rel="stylesheet">
-		<link rel="modulepreload" href="./_app/immutable/entry/start.Pn9MJTte.js">
-		<link rel="modulepreload" href="./_app/immutable/chunks/entry.DF4i0s6-.js">
-		<link rel="modulepreload" href="./_app/immutable/chunks/scheduler.CQ8LfOo8.js">
-		<link rel="modulepreload" href="./_app/immutable/chunks/index.Bpm8hVCz.js">
-		<link rel="modulepreload" href="./_app/immutable/entry/app.CNDbPZpe.js">
-		<link rel="modulepreload" href="./_app/immutable/chunks/preload-helper.D6kgxu3v.js">
-		<link rel="modulepreload" href="./_app/immutable/chunks/index.C7qbAY9A.js">
-		<link rel="modulepreload" href="./_app/immutable/nodes/0.CCWyy5Hg.js">
-		<link rel="modulepreload" href="./_app/immutable/chunks/stores.Dza5QqqW.js">
-		<link rel="modulepreload" href="./_app/immutable/nodes/2.B63-ELS-.js">
-		<link rel="modulepreload" href="./_app/immutable/chunks/transform.Dpvu3v84.js">
-		<link rel="modulepreload" href="./_app/immutable/chunks/Index.Do5SLOl8.js"><title>Title TK</title><!-- HEAD_svelte-1htu80s_START --><meta name="description" content="Description tk."><meta name="author" content="The Pudding"><meta name="news_keywords" content=""><meta property="og:title" content="Title TK"><meta property="og:site_name" content="The Pudding"><meta property="og:url" content="https://pudding.cool"><meta property="og:description" content="Description tk."><meta property="og:type" content="article"><meta property="og:locale" content="en_US"><meta property="og:image" content="https://pudding.cool/assets/social-facebook.jpg"><meta property="og:image:type" content="image/jpeg"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="600"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="https://pudding.cool"><meta name="twitter:creator" content="@puddingviz"><meta name="twitter:title" content="Title TK"><meta name="twitter:description" content="Description tk."><meta name="twitter:image:src" content="https://pudding.cool/assets/social-twitter.jpg"><meta name="robots" content="max-image-preview:large"><link rel="canonical" href="https://pudding.cool/"><link rel="preload" href="https://pudding.cool/assets/fonts/tiempos/TiemposTextWeb-Regular.woff2" as="font" type="font/woff2" crossorigin><link rel="preload" href="https://pudding.cool/assets/fonts/tiempos/TiemposTextWeb-Bold.woff2" as="font" type="font/woff2" crossorigin><link rel="preload" href="https://pudding.cool/assets/fonts/atlas/AtlasGrotesk-Regular-Web.woff2" as="font" type="font/woff2" crossorigin><link rel="preload" href="https://pudding.cool/assets/fonts/atlas/AtlasGrotesk-Bold-Web.woff2" as="font" type="font/woff2" crossorigin><!-- HEAD_svelte-1htu80s_END -->
-</head>
-
-<body>
-	<a href="#content" class="skip-to-main">Skip to main content</a>
-	<div>  <header><div class="wordmark svelte-1h2hjst"><a href="https://pudding.cool" aria-label="The Pudding" target="_self" class="svelte-1h2hjst"><!-- HTML_TAG_START --><svg width="201" height="49" viewBox="0 0 201 49" fill="none" xmlns="http://www.w3.org/2000/svg">
+import{s as k,n as g,v as S,w as j,x as A,y as x,c as D}from"../chunks/scheduler.CQ8LfOo8.js";import{S as y,i as E,e as _,H as I,c as m,a as M,A as T,d as h,o as c,f as v,g as u,u as q,h as H,t as z,v as O,k as b,b as P,w as B,s as N,n as L,l as $,x as R}from"../chunks/index.C7qbAY9A.js";import{p as F}from"../chunks/stores.Dza5QqqW.js";const G=!0,J="always",e1=Object.freeze(Object.defineProperty({__proto__:null,prerender:G,trailingSlash:J},Symbol.toStringTag,{value:"Module"})),K=`<svg width="201" height="49" viewBox="0 0 201 49" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path d="M135.14 20.83V20.7C135.35 15.87 130.62 16.21 130.96 20.9C130.65 25.56 135.54 25.46 135.14 20.83Z" fill="black"/>
 <path d="M115.78 20.76V20.63C115.66 19.64 115.61 18.26 114.72 17.59C113.88 16.96 112.53 17.28 112.11 18.18C111.23 19.94 110.95 24.19 113.74 24.3C115.53 24.4 115.84 21.9 115.78 20.76Z" fill="black"/>
 <path d="M74.11 12.16C72.84 12.45 72.54 14.46 72.59 15.47V15.59C72.65 16.63 72.88 18.49 74.24 18.65C77.26 19.15 77.15 11.69 74.11 12.17V12.16Z" fill="black"/>
@@ -44,32 +18,4 @@
 <path d="M122.75 18.46C122.65 14.89 122.55 10.74 122.35 7.08999C122.28 6.32999 122.09 5.47999 121.44 5.04999C120.95 4.71999 120.32 4.63999 119.72 4.60999C118.25 4.59999 116.32 4.40999 115.74 5.60999C115.3 6.44999 115.47 7.49999 115.2 8.37999C114.89 9.60999 113.76 9.99999 112.59 10.19C111.08 10.43 109.59 11.03 108.4 12.03C101.79 17.1 104.32 39.06 114.53 29.96C115.42 29.19 116.56 29.25 117.12 30.36C117.53 31.14 118.15 31.77 119.07 31.88C120.84 32.18 122.73 31.86 122.85 30.03C123.07 26.25 122.78 22.39 122.76 18.64V18.46H122.75ZM113.73 24.3C110.93 24.19 111.22 19.94 112.1 18.18C112.53 17.29 113.87 16.96 114.71 17.59C115.6 18.26 115.66 19.65 115.77 20.63V20.76C115.83 21.9 115.53 24.4 113.73 24.3Z" fill="white"/>
 <path d="M103.33 20.62C103.33 18.48 103.3 15.97 103.26 13.62C103.24 12.83 103.24 11.93 102.79 11.27C102.24 10.41 100.97 10.4 99.83 10.41C98.71 10.46 97.18 10.23 96.31 10.88C95.72 11.34 95.62 12.19 95.59 12.92C95.54 15.6 95.65 18.33 95.56 21.01C95.51 21.81 95.34 22.9 94.53 23.23C91.74 24 93.24 14.68 92.88 12.85C92.94 10.49 91.02 10.33 88.94 10.43C86.58 10.33 85.08 10.66 85.25 13.43C85.25 18.45 84.39 23.68 85.77 28.5C86.46 31.71 90.33 33.38 93.13 31.65C94.13 31.14 94.93 30.01 96.08 29.89C96.59 29.86 97.03 30.19 97.44 30.63C98.16 31.52 99.05 32.01 100.2 31.99C102.04 32.15 103.39 31.45 103.36 29.57C103.43 26.64 103.32 23.7 103.33 20.8V20.62Z" fill="white"/>
 </svg>
-<!-- HTML_TAG_END --></a></div> </header> <main id="content"><div class="page svelte-9qpn2z"><h2>User</h2>  </div> </main> 
-			
-			<script>
-				{
-					__sveltekit_41ws1l = {
-						base: new URL(".", location).pathname.slice(0, -1)
-					};
-
-					const element = document.currentScript.parentElement;
-
-					const data = [null,{"type":"data","data":{title:"User"},"uses":{}}];
-
-					Promise.all([
-						import("./_app/immutable/entry/start.Pn9MJTte.js"),
-						import("./_app/immutable/entry/app.CNDbPZpe.js")
-					]).then(([kit, app]) => {
-						kit.start(app, element, {
-							node_ids: [0, 2],
-							data,
-							form: null,
-							error: null
-						});
-					});
-				}
-			</script>
-		</div>
-</body>
-
-</html>
+`;function Q(r){let t,s,e,a;return{c(){t=_("header"),s=_("div"),e=_("a"),a=new I(!1),this.h()},l(i){t=m(i,"HEADER",{});var l=M(t);s=m(l,"DIV",{class:!0});var d=M(s);e=m(d,"A",{href:!0,"aria-label":!0,target:!0,class:!0});var p=M(e);a=T(p,!1),p.forEach(h),d.forEach(h),l.forEach(h),this.h()},h(){a.a=null,c(e,"href","https://pudding.cool"),c(e,"aria-label","The Pudding"),c(e,"target","_self"),c(e,"class","svelte-1h2hjst"),c(s,"class","wordmark svelte-1h2hjst")},m(i,l){v(i,t,l),u(t,s),u(s,e),a.m(K,e)},p:g,i:g,o:g,d(i){i&&h(t)}}}class U extends y{constructor(t){super(),E(this,t,null,Q,k,{})}}function W(r){let t,s,e,a,i,l=r[0].data.title+"",d,p,f;t=new U({});const V=r[2].default,n=S(V,r,r[1],null);return{c(){q(t.$$.fragment),s=H(),e=_("main"),a=_("div"),i=_("h2"),d=z(l),p=H(),n&&n.c(),this.h()},l(C){O(t.$$.fragment,C),s=b(C),e=m(C,"MAIN",{id:!0});var o=M(e);a=m(o,"DIV",{class:!0});var Z=M(a);i=m(Z,"H2",{});var w=M(i);d=P(w,l),w.forEach(h),p=b(Z),n&&n.l(Z),Z.forEach(h),o.forEach(h),this.h()},h(){c(a,"class","page svelte-9qpn2z"),c(e,"id","content")},m(C,o){B(t,C,o),v(C,s,o),v(C,e,o),u(e,a),u(a,i),u(i,d),u(a,p),n&&n.m(a,null),f=!0},p(C,[o]){(!f||o&1)&&l!==(l=C[0].data.title+"")&&N(d,l),n&&n.p&&(!f||o&2)&&j(n,V,C,C[1],f?x(V,C[1],o,null):A(C[1]),null)},i(C){f||(L(t.$$.fragment,C),L(n,C),f=!0)},o(C){$(t.$$.fragment,C),$(n,C),f=!1},d(C){C&&(h(s),h(e)),R(t,C),n&&n.d(C)}}}function X(r,t,s){let e;D(r,F,l=>s(0,e=l));let{$$slots:a={},$$scope:i}=t;return r.$$set=l=>{"$$scope"in l&&s(1,i=l.$$scope)},[e,i,a]}class a1 extends y{constructor(t){super(),E(this,t,X,W,k,{})}}export{a1 as component,e1 as universal};
