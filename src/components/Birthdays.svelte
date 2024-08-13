@@ -65,7 +65,7 @@
 	{#if errorMessage}
 		<div class="error">{errorMessage}</div>
 	{:else if submitted}
-		<div class="success">Submitted!</div>
+		<div class="success">Submitted! 🥳</div>
 	{/if}
 </form>
 

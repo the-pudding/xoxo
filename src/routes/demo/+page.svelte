@@ -57,7 +57,7 @@
 			If we ask 50 people for their birthdays, how likely are we to get a match?
 		</h4>
 
-		<h4>Go to <strong>pudding.cool/xoxo</strong> to make your guess</h4>
+		<h4>Go to <strong>pudding.cool/xoxo</strong> to make your guess! 🤔</h4>
 
 		<div class="qr-code">qr code</div>
 	{/if}
@@ -65,7 +65,10 @@
 	{#if showResults}
 		<Birthdays />
 	{:else}
-		<h2>Enter your birthday</h2>
+		<h4>
+			Go to <strong>pudding.cool/xoxo</strong> and tell us your birthday! 🎈
+		</h4>
+		<div class="qr-code">qr code</div>
 	{/if}
 {:else if view === "simulation"}
 	<Simulation data={simulationData} />

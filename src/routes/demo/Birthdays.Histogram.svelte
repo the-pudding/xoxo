@@ -4,36 +4,35 @@
 	import { LayerCake, Svg, Html } from "layercake";
 	import { scaleBand, scaleLinear } from "d3-scale";
 	import { timeFormat, timeParse } from "d3-time-format";
+	import _ from "lodash";
+	import getAstrologicalSign from "$routes/demo/getAstrologicalSign.js";
 
 	export let data = [];
 	export let title;
 	export let subtitle;
+	export let xKey;
+	export let xDomain;
+	export let xTicks = [];
+	export let formatTick = (d) => d;
+	export let showMatches = true;
 
-	const xKey = "birthday";
 	const yKey = "id";
-	const startDate = new Date(1990, 0, 1);
-	const formatDate = (d) => timeFormat("%b %d")(d);
 	const parseDate = (d) => timeParse("%Y-%m-%d")(d);
-	const xTicks = [startDate, new Date(1990, 6, 2), new Date(1990, 11, 31)];
-
-	const dates = Array.from({ length: 366 }, (_, i) => {
-		const date = new Date(startDate);
-		date.setDate(startDate.getDate() + i);
-		return date;
-	});
 
 	$: data = data.map((d) => ({
 		...d,
 		birthday: parseDate(d.birthday),
-		hasMatch: !!data.find((m) => m.birthday === d.birthday && m.id !== d.id)
+		hasMatch: !!data.find((m) => m.birthday === d.birthday && m.id !== d.id),
+		astrologicalSign: getAstrologicalSign(d.birthday)
 	}));
+
+	$: console.log(data);
 </script>
 
 {#if data.length > 0}
 	<div class="histogram">
 		{#if title}<div class="title">{title}</div>{/if}
 		{#if subtitle}<div class="subtitle">{subtitle}</div>{/if}
-		<!-- <div class="subtitle" style="text-align: center">🎉 = shared birthday</div> -->
 
 		<div class="chart-container">
 			<LayerCake
@@ -41,7 +40,7 @@
 				x={xKey}
 				y={yKey}
 				xScale={scaleBand().paddingInner(0.02)}
-				xDomain={dates}
+				{xDomain}
 				yDomain={[0, null]}
 				{data}
 			>
@@ -49,10 +48,10 @@
 					<AxisX
 						ticks={xTicks}
 						gridlines={false}
-						format={formatDate}
+						format={formatTick}
 						baseline={true}
 					/>
-					<People />
+					<People {showMatches} />
 				</Html>
 			</LayerCake>
 		</div>

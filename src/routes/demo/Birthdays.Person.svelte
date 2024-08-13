@@ -7,7 +7,7 @@
 	export let isMatch;
 
 	const frameRate = 100;
-	const walkDuration = 4000;
+	const walkDuration = 5000;
 
 	let frame;
 	let frameI = 0;
@@ -28,7 +28,7 @@
 			entered = true;
 		}, 100);
 
-		delay = Math.random() * 500;
+		delay = Math.random() * 700;
 
 		const interval = setInterval(() => {
 			frameI = (frameI + 1) % walkingFrames.length;
@@ -64,7 +64,7 @@
 		display: flex;
 		flex-direction: column;
 		align-items: center;
-		transform: translate(-100vw, 0);
+		transform: translate(-90vw, 0);
 		transition: transform var(--walk-dur) var(--walk-delay) ease-in-out;
 	}
 	.entered {
