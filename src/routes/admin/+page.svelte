@@ -62,6 +62,7 @@
 			payload: view
 		});
 
+		showResults = false;
 		await update({ table: "state", column: "view", value: view, id: 1 });
 	};
 	const updateShowResults = async () => {

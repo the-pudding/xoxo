@@ -52,7 +52,14 @@
 	{#if showResults}
 		<Guesses />
 	{:else}
-		<h2>Enter your guess</h2>
+		<h2>Should Matt take the bet?</h2>
+		<h4>
+			If we ask 50 people for their birthdays, how likely are we to get a match?
+		</h4>
+
+		<h4>Go to <strong>pudding.cool/xoxo</strong> to make your guess</h4>
+
+		<div class="qr-code">qr code</div>
 	{/if}
 {:else if view === "birthdays"}
 	{#if showResults}
@@ -65,7 +72,17 @@
 {/if}
 
 <style>
-	strong {
+	:global(strong) {
 		color: var(--color-red);
+	}
+	h2,
+	h4 {
+		text-align: center;
+	}
+	.qr-code {
+		background: var(--color-gray-200);
+		height: 200px;
+		width: 200px;
+		text-align: center;
 	}
 </style>

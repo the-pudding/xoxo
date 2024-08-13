@@ -30,6 +30,28 @@
 	});
 </script>
 
-{#if guesses.length > 0}
-	<Histogram data={guesses.map((d) => d.guess)} />
-{/if}
+<div class="container">
+	{#if guesses.length > 0}
+		<Histogram data={guesses.map((d) => d.guess)} />
+	{/if}
+
+	<div class="bottom">
+		<div class="qr-code">qr code</div>
+		<div>Go to <strong>pudding.cool/xoxo</strong> to participate!</div>
+	</div>
+</div>
+
+<style>
+	.qr-code {
+		background: var(--color-gray-200);
+		height: 100px;
+		width: 100px;
+		text-align: center;
+		margin-top: 1rem;
+		margin-right: 2rem;
+	}
+	.bottom {
+		display: flex;
+		align-items: center;
+	}
+</style>
