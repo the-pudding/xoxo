@@ -2,6 +2,7 @@
 	import Default from "$routes/demo/Birthdays.Default.svelte";
 	import Astrology from "$routes/demo/Birthdays.Astrology.svelte";
 	import Common from "$routes/demo/Birthdays.Common.svelte";
+	import Today from "$routes/demo/Birthdays.Today.svelte";
 	import { onMount } from "svelte";
 	import { createClient } from "@supabase/supabase-js";
 	import { load } from "$utils/supabase.js";
@@ -38,7 +39,7 @@
 	});
 </script>
 
-<div class="website">
+<div class="website" class:visible={groupBy !== "today"}>
 	<img src={`/assets/demo/qrcode.png`} class="qr-code" />
 	<h4>
 		Go to <strong>pudding.cool/xoxo</strong> and tell us your birthday! 🎈
@@ -47,11 +48,13 @@
 
 <div class="chart">
 	{#if groupBy === "default"}
-		<Default birthdays={manyBirthdays} />
+		<Default {birthdays} />
 	{:else if groupBy === "astrology"}
-		<Astrology birthdays={manyBirthdays} />
+		<Astrology {birthdays} />
 	{:else if groupBy === "common"}
-		<Common birthdays={manyBirthdays} />
+		<Common {birthdays} />
+	{:else if groupBy === "today"}
+		<Today {birthdays} />
 	{/if}
 </div>
 
@@ -64,8 +67,11 @@
 		color: var(--color-red);
 	}
 	.website {
-		display: flex;
+		display: none;
 		align-items: center;
+	}
+	.visible {
+		display: flex;
 	}
 	.qr-code {
 		height: 200px;
