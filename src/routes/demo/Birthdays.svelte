@@ -41,7 +41,7 @@
 	<h4>
 		Go to <strong>pudding.cool/xoxo</strong> and tell us your birthday! 🎈
 	</h4>
-	<div class="qr-code">qr code</div>
+	<img src={`/assets/demo/qrcode.png`} class="qr-code" />
 </div>
 
 <div class="chart">
@@ -66,10 +66,8 @@
 		align-items: center;
 	}
 	.qr-code {
-		background: var(--color-gray-200);
 		height: 200px;
 		width: 200px;
-		text-align: center;
 	}
 	.chart {
 		margin-top: 2rem;
