@@ -5,7 +5,6 @@
 	import { scaleBand } from "d3-scale";
 	import { timeParse, timeFormat } from "d3-time-format";
 	import _ from "lodash";
-	import { dateToSign } from "$routes/demo/getAstrologicalSign.js";
 
 	const startDate = new Date(1990, 0, 1);
 	const dateTicks = [startDate, new Date(1990, 6, 2), new Date(1990, 11, 31)];
@@ -30,8 +29,7 @@
 	$: data = data.map((d) => ({
 		...d,
 		birthday: parseDate(d.birthday),
-		hasMatch: !!data.find((m) => m.birthday === d.birthday && m.id !== d.id),
-		astrologicalSign: dateToSign(d.birthday)
+		hasMatch: !!data.find((m) => m.birthday === d.birthday && m.id !== d.id)
 	}));
 </script>
 
@@ -80,5 +78,6 @@
 	.subtitle {
 		color: var(--color-gray-800);
 		margin: 0.5rem 0;
+		margin-bottom: 1rem;
 	}
 </style>

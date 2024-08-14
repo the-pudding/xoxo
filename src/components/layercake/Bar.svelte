@@ -12,6 +12,8 @@
 		{@const y = $yGet(d)}
 		{@const width = $xGet(d)}
 		{@const height = $yScale.bandwidth()}
-		<rect data-id={i} {x} {y} {width} {height} {fill} />
+		{#if width > 0 && height > 0}
+			<rect data-id={i} {x} {y} {width} {height} {fill} />
+		{/if}
 	{/each}
 </g>

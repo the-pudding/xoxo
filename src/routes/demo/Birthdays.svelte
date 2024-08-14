@@ -1,5 +1,6 @@
 <script>
 	import Default from "$routes/demo/Birthdays.Default.svelte";
+	import Astrology from "$routes/demo/Birthdays.Astrology.svelte";
 	import { onMount } from "svelte";
 	import { createClient } from "@supabase/supabase-js";
 	import { load } from "$utils/supabase.js";
@@ -12,6 +13,10 @@
 	const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
 	let birthdays = [];
+
+	$: manyBirthdays = _.flatMap(birthdays, (birthday) =>
+		Array(20).fill(birthday)
+	);
 
 	const handleBirthdayInsert = (payload) => {
 		if (payload.eventType === "INSERT") {
@@ -41,7 +46,9 @@
 
 <div class="chart">
 	{#if groupBy === "default"}
-		<Default {birthdays} />
+		<Default birthdays={manyBirthdays} />
+	{:else if groupBy === "astrology"}
+		<Astrology birthdays={manyBirthdays} />
 	{/if}
 </div>
 
