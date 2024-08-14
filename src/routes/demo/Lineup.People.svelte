@@ -1,10 +1,10 @@
 <script>
-	import Person from "$routes/demo/Birthdays.Person.svelte";
+	import Person from "$routes/demo/Lineup.Person.svelte";
 	import { getContext } from "svelte";
 
 	export let showMatches;
 
-	const { data, xGet } = getContext("LayerCake");
+	const { data, xGet, xScale } = getContext("LayerCake");
 
 	const colors = ["blue", "green", "purple", "red", "yellow"];
 </script>

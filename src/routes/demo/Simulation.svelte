@@ -1,5 +1,5 @@
 <script>
-	import Histogram from "$routes/demo/Birthdays.Histogram.svelte";
+	import Lineup from "$routes/demo/Lineup.svelte";
 
 	export let data;
 
@@ -21,7 +21,7 @@
 	<h2>Success rate: {successes} / {numSimulations}</h2>
 {/if}
 
-<Histogram
+<Lineup
 	title={`Simulation of size ${data?.length}`}
 	subtitle={"Will there be a birthday match?"}
 	{data}

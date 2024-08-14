@@ -1,7 +1,6 @@
 <script>
 	import Demo from "$routes/demo/+page.svelte";
 	import User from "$components/Index.svelte";
-	import Toggle from "$components/helpers/Toggle.svelte";
 	import ButtonSet from "$components/helpers/ButtonSet.svelte";
 	import { load, update } from "$utils/supabase.js";
 	import { createClient } from "@supabase/supabase-js";
@@ -13,8 +12,8 @@
 	const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
 	let view;
-	let showResults;
 	let simulationN;
+	let groupBy;
 	let birthdays;
 	let userChannel;
 	let demoChannel;
@@ -22,13 +21,16 @@
 	let demoChannelConnected = false;
 
 	const viewOptions = [
-		{ label: "Gather votes", value: "guesses" },
 		{ label: "Gather birthdays", value: "birthdays" },
 		{ label: "Simulations", value: "simulation" }
 	];
-	const toggleOptions = [
-		{ value: true, text: "on" },
-		{ value: false, text: "off" }
+	const groupOptions = [
+		{ label: "Default", value: "default" },
+		{ label: "Astrological sign", value: "astrology" },
+		{ label: "Most common", value: "common" },
+		{ label: "Holidays", value: "holidays" },
+		{ label: "Bad actor", value: "bad" },
+		{ label: "Today's birthdays", value: "today" }
 	];
 
 	const sendBroadcast = ({ channel, event, payload }) => {
@@ -46,7 +48,7 @@
 	};
 
 	$: view, updateView();
-	$: showResults, updateShowResults();
+	$: groupBy, updateGroupBy();
 
 	const updateView = async () => {
 		if (!userChannel || !demoChannel) return;
@@ -62,22 +64,20 @@
 			payload: view
 		});
 
-		showResults = false;
 		await update({ table: "state", column: "view", value: view, id: 1 });
 	};
-	const updateShowResults = async () => {
+	const updateGroupBy = async () => {
 		if (!demoChannel) return;
 
 		sendBroadcast({
 			channel: demoChannel,
-			event: "show-results",
-			payload: showResults
+			event: "groupBy",
+			payload: groupBy
 		});
-
 		await update({
 			table: "state",
-			column: "show_results",
-			value: showResults,
+			column: "groupBy",
+			value: groupBy,
 			id: 1
 		});
 	};
@@ -111,7 +111,7 @@
 
 		const dbView = await load({ table: "state" });
 		view = dbView[0].view;
-		showResults = dbView[0].show_results;
+		groupBy = dbView[0].groupBy;
 	});
 </script>
 
@@ -124,13 +124,8 @@
 
 <ButtonSet legend={"Set View"} options={viewOptions} bind:value={view} />
 
-{#if view === "guesses" || view === "birthdays"}
-	<Toggle
-		label="Show results in demo"
-		style="inner"
-		options={toggleOptions}
-		bind:value={showResults}
-	/>
+{#if view === "birthdays"}
+	<ButtonSet legend={"Group by"} options={groupOptions} bind:value={groupBy} />
 {/if}
 
 {#if view === "simulation"}
@@ -139,8 +134,6 @@
 		<input type="number" bind:value={simulationN} placeholder="N" />
 		<button on:click={runSimulation}>Run</button>
 	</div>
-
-	<button>Reset simulations</button>
 {/if}
 
 <hr />

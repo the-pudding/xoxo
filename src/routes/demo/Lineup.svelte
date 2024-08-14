@@ -1,19 +1,27 @@
 <script>
 	import AxisX from "$components/layercake/AxisX.html.svelte";
-	import People from "$routes/demo/Birthdays.People.svelte";
-	import { LayerCake, Svg, Html } from "layercake";
-	import { scaleBand, scaleLinear } from "d3-scale";
-	import { timeFormat, timeParse } from "d3-time-format";
+	import People from "$routes/demo/Lineup.People.svelte";
+	import { LayerCake, Html } from "layercake";
+	import { scaleBand } from "d3-scale";
+	import { timeParse, timeFormat } from "d3-time-format";
 	import _ from "lodash";
-	import getAstrologicalSign from "$routes/demo/getAstrologicalSign.js";
+	import { dateToSign } from "$routes/demo/getAstrologicalSign.js";
+
+	const startDate = new Date(1990, 0, 1);
+	const dateTicks = [startDate, new Date(1990, 6, 2), new Date(1990, 11, 31)];
+	const allDates = Array.from({ length: 366 }, (_, i) => {
+		const date = new Date(startDate);
+		date.setDate(startDate.getDate() + i);
+		return date;
+	});
 
 	export let data = [];
 	export let title;
 	export let subtitle;
-	export let xKey;
-	export let xDomain;
-	export let xTicks = [];
-	export let formatTick = (d) => d;
+	export let xKey = "birthday";
+	export let xDomain = allDates;
+	export let xTicks = dateTicks;
+	export let formatTick = (d) => timeFormat("%b %d")(d);
 	export let showMatches = true;
 
 	const yKey = "id";
@@ -23,7 +31,7 @@
 		...d,
 		birthday: parseDate(d.birthday),
 		hasMatch: !!data.find((m) => m.birthday === d.birthday && m.id !== d.id),
-		astrologicalSign: getAstrologicalSign(d.birthday)
+		astrologicalSign: dateToSign(d.birthday)
 	}));
 </script>
 
@@ -45,6 +53,7 @@
 				<Html>
 					<AxisX
 						ticks={xTicks}
+						tickMarks={true}
 						gridlines={false}
 						format={formatTick}
 						baseline={true}

@@ -24,6 +24,7 @@
 	let entered = false;
 
 	onMount(() => {
+		frame = standingFrame;
 		setTimeout(() => {
 			entered = true;
 		}, 100);
@@ -43,6 +44,13 @@
 		}, walkDuration + delay);
 	});
 </script>
+
+<!-- <div
+	class="rect"
+	class:entered
+	style:left
+	style="position: absolute; bottom: 0; height: 200px; background: cornflowerblue; border: 1px solid black; width: 37px"
+/> -->
 
 <div
 	class="group"

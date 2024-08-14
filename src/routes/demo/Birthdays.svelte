@@ -1,10 +1,11 @@
 <script>
-	import Histogram from "$routes/demo/Birthdays.Histogram.svelte";
+	import Default from "$routes/demo/Birthdays.Default.svelte";
 	import { onMount } from "svelte";
 	import { createClient } from "@supabase/supabase-js";
 	import { load } from "$utils/supabase.js";
-	import { timeFormat, timeParse } from "d3-time-format";
 	import _ from "lodash";
+
+	export let groupBy;
 
 	const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
 	const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
@@ -17,16 +18,6 @@
 			birthdays = [...birthdays, payload.new];
 		}
 	};
-
-	const startDate = new Date(1990, 0, 1);
-	const formatDate = (d) => timeFormat("%b %d")(d);
-	const dateTicks = [startDate, new Date(1990, 6, 2), new Date(1990, 11, 31)];
-
-	const allDates = Array.from({ length: 366 }, (_, i) => {
-		const date = new Date(startDate);
-		date.setDate(startDate.getDate() + i);
-		return date;
-	});
 
 	onMount(async () => {
 		birthdays = await load({ table: "birthdays" });
@@ -41,23 +32,40 @@
 	});
 </script>
 
-<!-- <Histogram
-	title={"XOXO 2024's birthdays"}
-	subtitle={"Sorted by astrological sign"}
-	data={birthdays}
-	xKey={(d) => d.astrologicalSign.i}
-	xDomain={_.range(0, 11)}
-	xTicks={_.range(0, 11)}
-	showMatches={false}
-/> -->
+<div class="website">
+	<h4>
+		Go to <strong>pudding.cool/xoxo</strong> and tell us your birthday! 🎈
+	</h4>
+	<div class="qr-code">qr code</div>
+</div>
 
-<Histogram
-	title={"XOXO 2024's birthdays"}
-	subtitle={"Will there be a birthday match?"}
-	data={birthdays}
-	xKey={"birthday"}
-	xDomain={allDates}
-	xTicks={dateTicks}
-	formatTick={(d) => formatDate(d)}
-	showMatches={true}
-/>
+<div class="chart">
+	{#if groupBy === "default"}
+		<Default {birthdays} />
+	{/if}
+</div>
+
+<style>
+	h2,
+	h4 {
+		text-align: center;
+	}
+	strong {
+		color: var(--color-red);
+	}
+	.website {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+	}
+	.qr-code {
+		background: var(--color-gray-200);
+		height: 200px;
+		width: 200px;
+		text-align: center;
+	}
+	.chart {
+		margin-top: 2rem;
+		width: 100%;
+	}
+</style>
