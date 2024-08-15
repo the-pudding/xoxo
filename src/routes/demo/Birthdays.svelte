@@ -40,7 +40,7 @@
 </script>
 
 <div class="website" class:visible={groupBy !== "today"}>
-	<img src={`/assets/demo/qrcode.png`} class="qr-code" />
+	<img src={`/assets/qrcode.png`} class="qr-code" />
 	<h4>
 		Go to <strong>pudding.cool/xoxo</strong> and tell us your birthday! 🎈
 	</h4>
