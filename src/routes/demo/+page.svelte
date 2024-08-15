@@ -29,6 +29,11 @@
 		}
 	};
 
+	// subscribe to birthday here
+	// global store $interactive / $articleData = true/false
+	// in admin, send simulations with article data
+	// here, pass article data to Birthdays
+
 	onMount(async () => {
 		const userChannel = supabase.channel("demo");
 		userChannel

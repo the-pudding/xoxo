@@ -117,6 +117,9 @@
 </script>
 
 <h2>Admin</h2>
+
+<button class="red">Use article data</button>
+
 <div>
 	User Channel: {userChannelConnected ? "Connected ✅" : "Not connected 🚫"}
 </div>
@@ -169,5 +172,11 @@
 	}
 	input {
 		width: 5rem;
+	}
+	.red {
+		background-color: #e45546;
+	}
+	.red:hover {
+		background-color: var(--color-red);
 	}
 </style>
