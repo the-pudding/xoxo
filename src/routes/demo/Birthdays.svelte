@@ -6,6 +6,7 @@
 	import { onMount } from "svelte";
 	import { createClient } from "@supabase/supabase-js";
 	import { load } from "$utils/supabase.js";
+	import { base } from "$app/paths";
 	import _ from "lodash";
 
 	export let groupBy;
@@ -40,7 +41,7 @@
 </script>
 
 <div class="website" class:visible={groupBy !== "today"}>
-	<img src={`/assets/qrcode.png`} class="qr-code" />
+	<img src={`${base}/assets/qrcode.png`} class="qr-code" />
 	<h4>
 		Go to <strong>pudding.cool/xoxo</strong> and tell us your birthday! 🎈
 	</h4>

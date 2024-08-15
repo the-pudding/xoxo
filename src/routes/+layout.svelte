@@ -6,6 +6,7 @@
 	const correctPassword = import.meta.env.VITE_PASSWORD;
 	let password = "";
 	let loggedIn = false;
+	let isDev = import.meta.env.MODE === "development";
 
 	const requirePassword = ["Demo", "Admin", "User"];
 
@@ -22,7 +23,7 @@
 
 <main id="content">
 	<div class="page">
-		{#if loggedIn || !requirePassword.includes($page.data.title)}
+		{#if isDev || loggedIn || !requirePassword.includes($page.data.title)}
 			<slot />
 		{:else}
 			<h2>Protected Page</h2>
