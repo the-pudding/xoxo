@@ -6,8 +6,8 @@
 	import { timeParse, timeFormat } from "d3-time-format";
 	import _ from "lodash";
 
-	const startDate = new Date(1990, 0, 1);
-	const dateTicks = [startDate, new Date(1990, 6, 2), new Date(1990, 11, 31)];
+	const startDate = new Date(2024, 0, 1);
+	const dateTicks = [startDate, new Date(2024, 6, 2), new Date(2024, 11, 31)];
 	const allDates = Array.from({ length: 366 }, (_, i) => {
 		const date = new Date(startDate);
 		date.setDate(startDate.getDate() + i);

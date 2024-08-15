@@ -14,7 +14,7 @@
 			await insert({
 				data: {
 					first_name: name.toLowerCase(),
-					birthday: `1990-${month}-${day}`
+					birthday: `2024-${month}-${day}`
 				},
 				table: "birthdays"
 			});

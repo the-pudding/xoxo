@@ -3,6 +3,7 @@
 	import Astrology from "$routes/demo/Birthdays.Astrology.svelte";
 	import Common from "$routes/demo/Birthdays.Common.svelte";
 	import Today from "$routes/demo/Birthdays.Today.svelte";
+	import February from "$routes/demo/Birthdays.February.svelte";
 	import { onMount } from "svelte";
 	import { createClient } from "@supabase/supabase-js";
 	import { load } from "$utils/supabase.js";
@@ -41,7 +42,7 @@
 </script>
 
 <div class="website" class:visible={groupBy !== "today"}>
-	<img src={`${base}/assets/qrcode.png`} class="qr-code" />
+	<img src={`${base}/assets/qrcode.png`} alt="qr code" class="qr-code" />
 	<h4>
 		Go to <strong>pudding.cool/xoxo</strong> and tell us your birthday! 🎈
 	</h4>
@@ -56,6 +57,8 @@
 		<Common {birthdays} />
 	{:else if groupBy === "today"}
 		<Today {birthdays} />
+	{:else if groupBy === "february"}
+		<February {birthdays} />
 	{/if}
 </div>
 
