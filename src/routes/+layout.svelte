@@ -2,15 +2,37 @@
 	import { page } from "$app/stores";
 	import "$styles/app.css";
 	import Header from "$components/Header.svelte";
+
+	const correctPassword = import.meta.env.VITE_PASSWORD;
+	let password = "";
+	let loggedIn = false;
+
+	const requirePassword = ["Demo", "Admin", "User"];
+
+	const submit = () => {
+		if (password === correctPassword) {
+			loggedIn = true;
+		} else {
+			alert("Incorrect password");
+		}
+	};
 </script>
 
 <Header />
-<main id="content">
+
+{#if loggedIn || !requirePassword.includes($page.data.title)}
+	<main id="content">
+		<div class="page">
+			<slot />
+		</div>
+	</main>
+{:else}
 	<div class="page">
-		<h2>{$page.data.title}</h2>
-		<slot />
+		<h2>Protected Page</h2>
+		<input type="password" bind:value={password} placeholder="Enter password" />
+		<button on:click={submit}>Submit</button>
 	</div>
-</main>
+{/if}
 
 <style>
 	.page {
@@ -19,5 +41,9 @@
 		display: flex;
 		flex-direction: column;
 		align-items: center;
+	}
+
+	button {
+		margin-top: 1rem;
 	}
 </style>

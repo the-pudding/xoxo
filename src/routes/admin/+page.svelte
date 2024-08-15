@@ -115,6 +115,7 @@
 	});
 </script>
 
+<h2>Admin</h2>
 <div>
 	User Channel: {userChannelConnected ? "Connected ✅" : "Not connected 🚫"}
 </div>
