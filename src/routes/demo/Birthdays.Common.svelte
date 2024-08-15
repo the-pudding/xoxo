@@ -1,10 +1,13 @@
 <script>
 	import { utcFormat, timeParse } from "d3-time-format";
+	import { base } from "$app/paths";
+	import _ from "lodash";
 
 	export let birthdays;
 
 	const parseDate = timeParse("%Y-%m-%d");
 	const formatDate = utcFormat("%B %-d");
+	const colors = ["red", "green", "purple", "yellow", "blue"];
 
 	let mostCommon;
 	let people = [];
@@ -33,11 +36,18 @@
 <div id="common">
 	<h2>The most common birthday is <strong>{mostCommon}</strong></h2>
 	<h4>{people.length} people have that birthday</h4>
-	<ul>
+	<div class="people">
 		{#each people as { first_name }}
-			<li>{first_name}</li>
+			{@const color = _.sample(colors)}
+			<div class="person-group">
+				<div>{first_name}</div>
+				<div
+					class="person"
+					style:background-image={`url(${base}/assets/demo/${color}.png)`}
+				/>
+			</div>
 		{/each}
-	</ul>
+	</div>
 </div>
 
 <style>
@@ -45,5 +55,23 @@
 		display: flex;
 		flex-direction: column;
 		align-items: center;
+	}
+	.people {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 1rem;
+		justify-content: center;
+	}
+	.person-group {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+	}
+	.person {
+		background-position: 0 0;
+		width: 32px;
+		height: 70px;
+		background-size: 128px 210px;
+		background-repeat: no-repeat;
 	}
 </style>

@@ -1,5 +1,6 @@
 <script>
 	import { onMount } from "svelte";
+	import { base } from "$app/paths";
 
 	export let name;
 	export let left;
@@ -61,7 +62,7 @@
 	<div class="label">{name}</div>
 	<div
 		class="person"
-		style={`background-position: ${frame ? frame.x : 0}px ${frame ? frame.y : 0}px;--img: url(/assets/demo/${color}.png)`}
+		style={`background-position: ${frame ? frame.x : 0}px ${frame ? frame.y : 0}px;--img: url(${base}/assets/demo/${color}.png)`}
 	/>
 </div>
 
