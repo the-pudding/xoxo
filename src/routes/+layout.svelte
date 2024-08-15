@@ -20,19 +20,21 @@
 
 <Header />
 
-{#if loggedIn || !requirePassword.includes($page.data.title)}
-	<main id="content">
-		<div class="page">
-			<slot />
-		</div>
-	</main>
-{:else}
+<main id="content">
 	<div class="page">
-		<h2>Protected Page</h2>
-		<input type="password" bind:value={password} placeholder="Enter password" />
-		<button on:click={submit}>Submit</button>
+		{#if loggedIn || !requirePassword.includes($page.data.title)}
+			<slot />
+		{:else}
+			<h2>Protected Page</h2>
+			<input
+				type="password"
+				bind:value={password}
+				placeholder="Enter password"
+			/>
+			<button on:click={submit}>Submit</button>
+		{/if}
 	</div>
-{/if}
+</main>
 
 <style>
 	.page {
