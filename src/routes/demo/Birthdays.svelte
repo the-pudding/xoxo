@@ -3,6 +3,7 @@
 	import Astrology from "$routes/demo/Birthdays.Astrology.svelte";
 	import Common from "$routes/demo/Birthdays.Common.svelte";
 	import Today from "$routes/demo/Birthdays.Today.svelte";
+	import BadActors from "$routes/demo/Birthdays.BadActors.svelte";
 	import February from "$routes/demo/Birthdays.February.svelte";
 	import { onMount } from "svelte";
 	import { createClient } from "@supabase/supabase-js";
@@ -59,6 +60,8 @@
 		<Today {birthdays} />
 	{:else if groupBy === "february"}
 		<February {birthdays} />
+	{:else if groupBy === "bad"}
+		<BadActors {birthdays} />
 	{/if}
 </div>
 

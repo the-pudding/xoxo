@@ -7,6 +7,45 @@
 	import { onMount } from "svelte";
 	import _ from "lodash";
 
+	// const months = [
+	// 	31, // jan
+	// 	29, // feb
+	// 	31, // mar
+	// 	30, // apr
+	// 	31, // may
+	// 	30, // jun
+	// 	31, // jul
+	// 	31, // aug
+	// 	30, // sep
+	// 	31, // oct
+	// 	30, // nov
+	// 	31 // dec
+	// ];
+
+	// const dayToDate = (dayOfYear) => {
+	// 	let tally = 0;
+	// 	let m;
+	// 	let d;
+	// 	months.forEach((month, i) => {
+	// 		if (!m && !d) {
+	// 			tally += month;
+
+	// 			if (tally > dayOfYear) {
+	// 				tally -= month;
+	// 				d = dayOfYear - tally;
+	// 				m = i;
+	// 			}
+	// 		}
+	// 	});
+	// 	return new Date(2024, m, d);
+	// };
+
+	// const transformed = article.map((d) => ({
+	// 	...d,
+	// 	birthday: dayToDate(d.day)
+	// }));
+	// console.log(transformed);
+
 	const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
 	const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
 	const supabase = createClient(supabaseUrl, supabaseAnonKey);
@@ -118,7 +157,7 @@
 
 <h2>Admin</h2>
 
-<button class="red">Use article data</button>
+<!-- <button class="red">Use article data</button> -->
 
 <div>
 	User Channel: {userChannelConnected ? "Connected ✅" : "Not connected 🚫"}

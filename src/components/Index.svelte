@@ -21,7 +21,6 @@
 		userChannel
 			.on("broadcast", { event: "view" }, (msg) => receiveMessage(msg))
 			.subscribe();
-
 		const dbView = await load({ table: "state" });
 		view = dbView[0].view;
 	});
@@ -30,6 +29,6 @@
 {#if view === "birthdays"}
 	<Birthdays />
 {:else if view === "simulation"}
-	<p>Nothing to see here</p>
-	<p>Maybe light up people's phone's who are birthday matches?</p>
+	<!-- <p>Nothing to see here</p>
+	<p>Maybe light up people's phone's who are birthday matches?</p> -->
 {/if}

@@ -9,8 +9,8 @@
 	const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
 	const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
-	let view;
-	let groupBy;
+	let view = "birthdays";
+	let groupBy = "default";
 	let simulationData;
 
 	const receiveMessage = (msg) => {
@@ -29,6 +29,7 @@
 		}
 	};
 
+	// TODO
 	// subscribe to birthday here
 	// global store $interactive / $articleData = true/false
 	// in admin, send simulations with article data
@@ -45,7 +46,6 @@
 				receiveMessage(payload)
 			)
 			.subscribe();
-
 		const dbView = await load({ table: "state" });
 		view = dbView[0].view;
 		groupBy = dbView[0].groupBy;
