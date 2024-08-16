@@ -18,7 +18,7 @@
 </script>
 
 {#if numSimulations > 0}
-	<h2>Success rate: {successes} / {numSimulations}</h2>
+	<h2>Hit a birthday match: {successes} / {numSimulations}</h2>
 {/if}
 
 <Lineup
