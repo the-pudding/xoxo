@@ -1,5 +1,5 @@
 <script>
-	import People from "$routes/demo/Birthdays.People.svelte";
+	import People from "$components/Birthdays.People.svelte";
 	import badWords from "$data/bad_words.json";
 
 	export let birthdays;

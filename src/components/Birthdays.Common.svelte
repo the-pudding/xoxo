@@ -1,5 +1,5 @@
 <script>
-	import People from "$routes/demo/Birthdays.People.svelte";
+	import People from "$components/Birthdays.People.svelte";
 	import { utcFormat, timeParse } from "d3-time-format";
 
 	export let birthdays;

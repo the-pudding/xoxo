@@ -1,50 +1,10 @@
 <script>
-	import Demo from "$routes/demo/+page.svelte";
-	import User from "$components/Index.svelte";
+	import Demo from "$components/Index.svelte";
 	import ButtonSet from "$components/helpers/ButtonSet.svelte";
 	import { load, update } from "$utils/supabase.js";
 	import { createClient } from "@supabase/supabase-js";
 	import { onMount } from "svelte";
 	import _ from "lodash";
-
-	// const months = [
-	// 	31, // jan
-	// 	29, // feb
-	// 	31, // mar
-	// 	30, // apr
-	// 	31, // may
-	// 	30, // jun
-	// 	31, // jul
-	// 	31, // aug
-	// 	30, // sep
-	// 	31, // oct
-	// 	30, // nov
-	// 	31 // dec
-	// ];
-
-	// const dayToDate = (dayOfYear) => {
-	// 	let tally = 0;
-	// 	let m;
-	// 	let d;
-	// 	months.forEach((month, i) => {
-	// 		if (!m && !d) {
-	// 			tally += month;
-
-	// 			if (tally > dayOfYear) {
-	// 				tally -= month;
-	// 				d = dayOfYear - tally;
-	// 				m = i;
-	// 			}
-	// 		}
-	// 	});
-	// 	return new Date(2024, m, d);
-	// };
-
-	// const transformed = article.map((d) => ({
-	// 	...d,
-	// 	birthday: dayToDate(d.day)
-	// }));
-	// console.log(transformed);
 
 	const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
 	const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
@@ -155,43 +115,52 @@
 	});
 </script>
 
-<h2>Admin</h2>
+<div class="page">
+	<h2>Admin</h2>
 
-<!-- <button class="red">Use article data</button> -->
+	<button class="red">Use article data</button>
 
-<div>
-	User Channel: {userChannelConnected ? "Connected ✅" : "Not connected 🚫"}
-</div>
-<div>
-	Demo Channel: {demoChannelConnected ? "Connected ✅" : "Not connected 🚫"}
-</div>
-
-<ButtonSet legend={"Set View"} options={viewOptions} bind:value={view} />
-
-{#if view === "birthdays"}
-	<ButtonSet legend={"Group by"} options={groupOptions} bind:value={groupBy} />
-{/if}
-
-{#if view === "simulation"}
-	<div class="input">
-		<div>Simulation with N people</div>
-		<input type="number" bind:value={simulationN} placeholder="N" />
-		<button on:click={runSimulation}>Run</button>
+	<div>
+		User Channel: {userChannelConnected ? "Connected ✅" : "Not connected 🚫"}
 	</div>
-{/if}
+	<div>
+		Demo Channel: {demoChannelConnected ? "Connected ✅" : "Not connected 🚫"}
+	</div>
 
-<hr />
+	<ButtonSet legend={"Set View"} options={viewOptions} bind:value={view} />
 
-<h3>On people's phones</h3>
-<div class="box">
-	<User />
-</div>
-<h3>On the big screen</h3>
-<div class="box">
-	<Demo />
+	{#if view === "birthdays"}
+		<ButtonSet
+			legend={"Group by"}
+			options={groupOptions}
+			bind:value={groupBy}
+		/>
+	{/if}
+
+	{#if view === "simulation"}
+		<div class="input">
+			<div>Simulation with N people</div>
+			<input type="number" bind:value={simulationN} placeholder="N" />
+			<button on:click={runSimulation}>Run</button>
+		</div>
+	{/if}
+
+	<hr />
+
+	<h3>On the big screen</h3>
+	<div class="box">
+		<Demo />
+	</div>
 </div>
 
 <style>
+	.page {
+		max-width: 1000px;
+		margin: 0 auto;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+	}
 	.box {
 		width: 100%;
 		padding: 1rem;

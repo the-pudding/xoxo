@@ -1,5 +1,5 @@
 <script>
-	import Lineup from "$routes/demo/Lineup.svelte";
+	import Lineup from "$components//Lineup.svelte";
 
 	export let data;
 

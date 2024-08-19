@@ -1,5 +1,5 @@
 <script>
-	import People from "$routes/demo/Birthdays.People.svelte";
+	import People from "$components/Birthdays.People.svelte";
 
 	export let birthdays;
 

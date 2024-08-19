@@ -1,5 +1,5 @@
 <script>
-	import Person from "$routes/demo/Lineup.Person.svelte";
+	import Person from "$components//Lineup.Person.svelte";
 	import { getContext } from "svelte";
 
 	export let showMatches;

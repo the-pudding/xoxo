@@ -1,6 +1,6 @@
 <script>
 	import AxisX from "$components/layercake/AxisX.html.svelte";
-	import People from "$routes/demo/Lineup.People.svelte";
+	import People from "$components//Lineup.People.svelte";
 	import { LayerCake, Html } from "layercake";
 	import { scaleBand } from "d3-scale";
 	import { timeParse, timeFormat } from "d3-time-format";

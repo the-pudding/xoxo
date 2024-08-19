@@ -1,92 +1,61 @@
 <script>
-	import { insert } from "$utils/supabase.js";
+	import Default from "$components/Birthdays.Default.svelte";
+	import Astrology from "$components/Birthdays.Astrology.svelte";
+	import Common from "$components/Birthdays.Common.svelte";
+	import Today from "$components/Birthdays.Today.svelte";
+	import BadActors from "$components/Birthdays.BadActors.svelte";
+	import February from "$components/Birthdays.February.svelte";
+	import { base } from "$app/paths";
+	import _ from "lodash";
 
-	let name;
-	let month;
-	let day;
-	let submitted = false;
-	let errorMessage;
-
-	const submit = async () => {
-		errorMessage = undefined;
-
-		try {
-			await insert({
-				data: {
-					first_name: name.toLowerCase(),
-					birthday: `2024-${month}-${day}`
-				},
-				table: "birthdays"
-			});
-
-			submitted = true;
-		} catch (error) {
-			console.log(error);
-			errorMessage = error;
-		}
-	};
+	export let birthdays = [];
+	export let groupBy;
 </script>
 
-<form on:submit|preventDefault={submit}>
-	<label for="first-name">First Name</label>
-	<input
-		id="first-name"
-		type="text"
-		bind:value={name}
-		required
-		maxlength="10"
-		disabled={submitted}
-	/>
+<div class="website" class:visible={groupBy !== "today"}>
+	<img src={`${base}/assets/qrcode.png`} alt="qr code" class="qr-code" />
+	<h4>
+		Go to <strong>pudding.cool/xoxo</strong> and tell us your birthday! 🎈
+	</h4>
+</div>
 
-	<label for="birthday">Month</label>
-	<input
-		id="birth-month"
-		type="text"
-		placeholder="MM"
-		bind:value={month}
-		required
-		maxlength="2"
-		disabled={submitted}
-	/>
-
-	<label for="birthday">Day</label>
-	<input
-		id="birth-day"
-		type="text"
-		placeholder="DD"
-		bind:value={day}
-		required
-		maxlength="2"
-		disabled={submitted}
-	/>
-
-	<button type="submit" disabled={submitted}>Submit</button>
-
-	{#if errorMessage}
-		<div class="error">{errorMessage}</div>
-	{:else if submitted}
-		<div class="success">Submitted! 🥳</div>
+<div class="chart">
+	{#if groupBy === "default"}
+		<Default {birthdays} />
+	{:else if groupBy === "astrology"}
+		<Astrology {birthdays} />
+	{:else if groupBy === "common"}
+		<Common {birthdays} />
+	{:else if groupBy === "today"}
+		<Today {birthdays} />
+	{:else if groupBy === "february"}
+		<February {birthdays} />
+	{:else if groupBy === "bad"}
+		<BadActors {birthdays} />
 	{/if}
-</form>
+</div>
 
 <style>
-	form {
+	h2,
+	h4 {
+		text-align: center;
+	}
+	strong {
+		color: var(--color-red);
+	}
+	.website {
+		display: none;
+		align-items: center;
+	}
+	.visible {
 		display: flex;
-		flex-direction: column;
 	}
-	button {
-		margin: 1rem 0;
+	.qr-code {
+		height: 200px;
+		width: 200px;
 	}
-	.error {
-		background: var(--color-red);
-		color: white;
-	}
-	.success {
-		background: var(--color-green);
-	}
-	.error,
-	.success {
-		padding: 0 4px;
-		width: fit-content;
+	.chart {
+		margin-top: 2rem;
+		width: 100%;
 	}
 </style>

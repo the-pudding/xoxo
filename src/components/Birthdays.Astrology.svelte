@@ -4,7 +4,7 @@
 	import AxisX from "$components/layercake/AxisX.svg.svelte";
 	import AxisY from "$components/layercake/AxisY.svg.svelte";
 	import Bar from "$components/layercake/Bar.svelte";
-	import { dateToSign } from "$routes/demo/astrology.js";
+	import { dateToSign } from "$utils/astrology.js";
 	import _ from "lodash";
 
 	export let birthdays;
