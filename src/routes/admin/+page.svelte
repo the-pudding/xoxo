@@ -94,6 +94,12 @@
 		view = dbView[0].view;
 		groupBy = dbView[0].groupBy;
 	});
+
+	const thisWeekend = ["2024-08-22", "2024-08-23", "2024-08-24", "2024-08-25"];
+
+	$: birthdaysThisWeekend = birthdays
+		? birthdays.filter((d) => thisWeekend.includes(d.birthday))
+		: [];
 </script>
 
 <div class="page">
@@ -122,6 +128,8 @@
 			<button on:click={runSimulation}>Run</button>
 		</div>
 	{/if}
+
+	<p>{birthdaysThisWeekend.length} birthdays this weekend.</p>
 
 	<hr />
 
