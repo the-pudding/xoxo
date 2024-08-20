@@ -23,6 +23,7 @@
 	];
 
 	let entered = false;
+	let done = false;
 
 	onMount(() => {
 		frame = standingFrame;
@@ -42,6 +43,8 @@
 
 			if (isMatch) frame = matchFrame;
 			else frame = standingFrame;
+
+			done = true;
 		}, walkDuration + delay);
 	});
 </script>
@@ -56,6 +59,7 @@
 <div
 	class="group"
 	class:entered
+	class:fade={done && !isMatch}
 	style:left
 	style={`--walk-dur: ${walkDuration}ms; --walk-delay: ${delay}ms;`}
 >
@@ -74,10 +78,18 @@
 		flex-direction: column;
 		align-items: center;
 		transform: translate(-100vw, 0);
-		transition: transform var(--walk-dur) var(--walk-delay) ease-in-out;
+		transition:
+			transform var(--walk-dur) var(--walk-delay) ease-in-out,
+			opacity 0.5s;
 	}
 	.entered {
 		transform: translate(0, 0);
+	}
+	.fade {
+		opacity: 0.1;
+	}
+	.fade .label {
+		opacity: 0;
 	}
 	.person {
 		width: 32px; /* Half the original width of one sprite */

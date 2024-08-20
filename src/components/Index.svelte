@@ -36,8 +36,8 @@
 	};
 
 	onMount(async () => {
-		const userChannel = supabase.channel("demo");
-		userChannel
+		const demoChannel = supabase.channel("demo");
+		demoChannel
 			.on("broadcast", { event: "view" }, (payload) => receiveMessage(payload))
 			.on("broadcast", { event: "simulation-n" }, (payload) =>
 				receiveMessage(payload)
@@ -73,6 +73,7 @@
 
 <style>
 	.page {
+		width: 100%;
 		max-width: 1000px;
 		margin: 0 auto;
 		display: flex;

@@ -4,7 +4,7 @@
 
 	export let showMatches;
 
-	const { data, xGet, xScale } = getContext("LayerCake");
+	const { data, xGet } = getContext("LayerCake");
 
 	const colors = ["blue", "green", "purple", "red", "yellow"];
 </script>
