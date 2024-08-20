@@ -35,8 +35,6 @@
 		}
 	};
 
-	$: console.log({ birthdays });
-
 	onMount(async () => {
 		const userChannel = supabase.channel("demo");
 		userChannel

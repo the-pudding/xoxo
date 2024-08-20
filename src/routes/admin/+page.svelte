@@ -26,8 +26,6 @@
 	const groupOptions = [
 		{ label: "Default", value: "default" },
 		{ label: "Astrological sign", value: "astrology" },
-		{ label: "Most common", value: "common" },
-		{ label: "Feb 29", value: "february" },
 		{ label: "Holidays", value: "holidays" },
 		{ label: "Bad actor", value: "bad" },
 		{ label: "Today's birthdays", value: "today" }
