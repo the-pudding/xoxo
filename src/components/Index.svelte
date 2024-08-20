@@ -29,9 +29,14 @@
 			groupBy = msg.payload;
 		}
 	};
-	const handleBirthdayInsert = (payload) => {
+	const handleBirthdayChange = (payload) => {
 		if (payload.eventType === "INSERT") {
 			birthdays = [...birthdays, payload.new];
+		} else if (payload.eventType === "UPDATE") {
+			birthdays = [
+				...birthdays.filter((d) => d.id !== payload.new.id),
+				payload.new
+			];
 		}
 	};
 
@@ -53,7 +58,12 @@
 			.on(
 				"postgres_changes",
 				{ event: "INSERT", schema: "public", table: "birthdays" },
-				handleBirthdayInsert
+				handleBirthdayChange
+			)
+			.on(
+				"postgres_changes",
+				{ event: "UPDATE", schema: "public", table: "birthdays" },
+				handleBirthdayChange
 			)
 			.subscribe();
 

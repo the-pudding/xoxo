@@ -1,4 +1,5 @@
 <script>
+	import BadActor from "$routes/admin/BadActor.svelte";
 	import Demo from "$components/Index.svelte";
 	import ButtonSet from "$components/helpers/ButtonSet.svelte";
 	import { load, update } from "$utils/supabase.js";
@@ -130,6 +131,8 @@
 	{/if}
 
 	<p>{birthdaysThisWeekend.length} birthdays this weekend.</p>
+
+	<BadActor {birthdays} />
 
 	<hr />
 

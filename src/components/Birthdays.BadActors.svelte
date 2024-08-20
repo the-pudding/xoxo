@@ -1,16 +1,9 @@
 <script>
 	import People from "$components/Birthdays.People.svelte";
-	import badWords from "$data/bad_words.json";
 
 	export let birthdays;
 
-	// TODO: make a better regex for this
-	$: badActors = birthdays.filter((d) => {
-		if (d.first_name === "michelle") return false;
-		const name = d.first_name;
-		const singleBad = badWords.filter((b) => b.split(" ").length === 1);
-		return singleBad.some((badWord) => name.includes(badWord));
-	});
+	$: badActors = birthdays.filter((d) => d.bad);
 </script>
 
 <div id="bad">
