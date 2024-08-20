@@ -37,6 +37,8 @@
 				...birthdays.filter((d) => d.id !== payload.new.id),
 				payload.new
 			];
+		} else if (payload.eventType === "DELETE") {
+			birthdays = birthdays.filter((d) => d.id !== payload.old.id);
 		}
 	};
 
@@ -63,6 +65,11 @@
 			.on(
 				"postgres_changes",
 				{ event: "UPDATE", schema: "public", table: "birthdays" },
+				handleBirthdayChange
+			)
+			.on(
+				"postgres_changes",
+				{ event: "DELETE", schema: "public", table: "birthdays" },
 				handleBirthdayChange
 			)
 			.subscribe();

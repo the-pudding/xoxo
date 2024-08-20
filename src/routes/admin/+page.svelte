@@ -2,9 +2,10 @@
 	import BadActor from "$routes/admin/BadActor.svelte";
 	import Demo from "$components/Index.svelte";
 	import ButtonSet from "$components/helpers/ButtonSet.svelte";
-	import { load, update } from "$utils/supabase.js";
+	import { load, update, insert, clear } from "$utils/supabase.js";
 	import { createClient } from "@supabase/supabase-js";
 	import { onMount } from "svelte";
+	import names from "$data/names.json";
 	import _ from "lodash";
 
 	const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
@@ -30,6 +31,7 @@
 		{ label: "Bad actor", value: "bad" },
 		{ label: "Today's birthdays", value: "today" }
 	];
+	const thisWeekend = ["2024-08-22", "2024-08-23", "2024-08-24", "2024-08-25"];
 
 	const sendBroadcast = ({ channel, event, payload }) => {
 		if (channel === demoChannel && !demoChannelConnected) return null;
@@ -40,10 +42,6 @@
 			payload: payload
 		});
 	};
-
-	$: view, updateView();
-	$: groupBy, updateGroupBy();
-
 	const updateView = async () => {
 		if (!demoChannel) return;
 
@@ -81,6 +79,37 @@
 			payload: { n: simulationN, birthdays: simulationData }
 		});
 	};
+	const clearDb = async () => {
+		await clear({ table: "birthdays" });
+		await insert({
+			table: "birthdays",
+			data: [
+				{ first_name: "matt", birthday: new Date("2024-01-31") },
+				{ first_name: "michelle", birthday: new Date("2024-06-13") }
+			]
+		});
+	};
+	const populateRandom = async (n) => {
+		const toInsert = _.times(n, () => {
+			const randomName = _.sample(names);
+			const start = new Date(2024, 0, 1);
+			const end = new Date(2024, 11, 31);
+			const date = new Date(
+				start.getTime() + Math.random() * (end.getTime() - start.getTime())
+			);
+			const month = String(date.getMonth() + 1).padStart(2, "0");
+			const day = String(date.getDate()).padStart(2, "0");
+			const randomBirthday = `2024-${month}-${day}`;
+
+			return {
+				first_name: randomName,
+				birthday: new Date(randomBirthday)
+			};
+		});
+		console.log({ toInsert });
+		await insert({ table: "birthdays", data: toInsert });
+	};
+	const articleData = () => {};
 
 	onMount(async () => {
 		demoChannel = supabase.channel("demo");
@@ -97,8 +126,8 @@
 		groupBy = dbView[0].groupBy;
 	});
 
-	const thisWeekend = ["2024-08-22", "2024-08-23", "2024-08-24", "2024-08-25"];
-
+	$: view, updateView();
+	$: groupBy, updateGroupBy();
 	$: birthdaysThisWeekend = birthdays
 		? birthdays.filter((d) => thisWeekend.includes(d.birthday))
 		: [];
@@ -107,13 +136,20 @@
 <div class="page">
 	<h2>Admin</h2>
 
-	<button class="red">Use article data</button>
-
 	<div>
-		Demo Channel: {demoChannelConnected ? "Connected ✅" : "Not connected 🚫"}
+		Broacast Channel: {demoChannelConnected
+			? "Connected ✅"
+			: "Not connected 🚫"}
 	</div>
 
 	<ButtonSet legend={"Set View"} options={viewOptions} bind:value={view} />
+
+	<div>
+		<strong>Database</strong>
+		<button on:click={clearDb}>Clear DB</button>
+		<button on:click={() => populateRandom(600)}>600 random</button>
+		<button on:click={articleData} class="red">Use article data</button>
+	</div>
 
 	{#if view === "birthdays"}
 		<ButtonSet
@@ -121,6 +157,7 @@
 			options={groupOptions}
 			bind:value={groupBy}
 		/>
+		<p>{birthdaysThisWeekend.length} birthdays this weekend.</p>
 	{/if}
 
 	{#if view === "simulation"}
@@ -130,8 +167,6 @@
 			<button on:click={runSimulation}>Run</button>
 		</div>
 	{/if}
-
-	<p>{birthdaysThisWeekend.length} birthdays this weekend.</p>
 
 	<BadActor {birthdays} />
 
@@ -159,6 +194,9 @@
 		flex-direction: column;
 		align-items: center;
 		margin-bottom: 3rem;
+	}
+	div {
+		margin: 1rem 0;
 	}
 	hr {
 		width: 100%;

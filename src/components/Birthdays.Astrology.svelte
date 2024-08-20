@@ -65,7 +65,7 @@
 				<Svg>
 					<AxisX tickMarks baseline snapLabels ticks={4} />
 					<AxisY tickMarks gridlines={false} {format} />
-					<Bar fill="var(--color-blue)" />
+					<Bar fill="var(--color-green)" />
 				</Svg>
 			</LayerCake>
 		</div>

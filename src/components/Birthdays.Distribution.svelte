@@ -1,9 +1,12 @@
 <script>
 	import { LayerCake, Svg } from "layercake";
 	import Line from "$components/layercake/Line.svelte";
+	import Area from "$components/layercake/Area.svelte";
 	import AxisX from "$components/layercake/AxisX.svg.svelte";
 	import AxisY from "$components/layercake/AxisY.svg.svelte";
 	import { utcFormat } from "d3-time-format";
+	import { curveBasis } from "d3-shape";
+
 	import _ from "lodash";
 
 	export let birthdays = [];
@@ -45,7 +48,8 @@
 			<Svg>
 				<AxisX ticks={dateTicks} {format} />
 				<AxisY />
-				<Line stroke="var(--color-purple)" />
+				<Line stroke="var(--color-purple)" curve={curveBasis} />
+				<Area fill="#ab00d610" />
 			</Svg>
 		</LayerCake>
 	</div>

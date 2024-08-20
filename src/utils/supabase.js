@@ -38,3 +38,13 @@ export const update = async ({ table, column, value, id }) => {
 	} else if (response.data) return response.data;
 	return undefined;
 };
+
+export const clear = async ({ table }) => {
+	const { data, error } = await supabase.from(table).delete().neq("id", -1);
+
+	if (error) {
+		console.error("Error clearing table:", error);
+	} else {
+		console.log("Table cleared:", data);
+	}
+};

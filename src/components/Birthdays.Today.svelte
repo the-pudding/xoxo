@@ -11,8 +11,9 @@
 </script>
 
 <div id="today">
-	<h2>Also, happy birthday to:</h2>
+	<h2>Also, happy birthday to...</h2>
 	<People birthdays={featured} hats={true} />
+	<h4>...who all have birthdays this weekend!</h4>
 </div>
 
 <style>
