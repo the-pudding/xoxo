@@ -33,35 +33,35 @@
 	}));
 </script>
 
-{#if data.length > 0}
-	<div class="histogram">
-		{#if title}<div class="title">{title}</div>{/if}
-		{#if subtitle}<div class="subtitle">{subtitle}</div>{/if}
+<div class="histogram">
+	{#if title}<div class="title">{title}</div>{/if}
+	{#if subtitle}<div class="subtitle">{subtitle}</div>{/if}
 
-		<div class="chart-container">
-			<LayerCake
-				padding={{ top: 0, right: 25, bottom: 50, left: 25 }}
-				x={xKey}
-				y={yKey}
-				xScale={scaleBand().paddingInner(0.02)}
-				{xDomain}
-				yDomain={[0, null]}
-				{data}
-			>
-				<Html>
-					<AxisX
-						ticks={xTicks}
-						tickMarks={true}
-						gridlines={false}
-						format={formatTick}
-						baseline={true}
-					/>
+	<div class="chart-container">
+		<LayerCake
+			padding={{ top: 0, right: 25, bottom: 50, left: 25 }}
+			x={xKey}
+			y={yKey}
+			xScale={scaleBand().paddingInner(0.02)}
+			{xDomain}
+			yDomain={[0, null]}
+			{data}
+		>
+			<Html>
+				<AxisX
+					ticks={xTicks}
+					tickMarks={true}
+					gridlines={false}
+					format={formatTick}
+					baseline={true}
+				/>
+				{#if data.length > 0}
 					<People {showMatches} />
-				</Html>
-			</LayerCake>
-		</div>
+				{/if}
+			</Html>
+		</LayerCake>
 	</div>
-{/if}
+</div>
 
 <style>
 	.histogram {

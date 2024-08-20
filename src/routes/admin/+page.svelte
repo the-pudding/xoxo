@@ -14,9 +14,7 @@
 	let simulationN;
 	let groupBy;
 	let birthdays;
-	let userChannel;
 	let demoChannel;
-	let userChannelConnected = false;
 	let demoChannelConnected = false;
 
 	const viewOptions = [
@@ -26,19 +24,13 @@
 	const groupOptions = [
 		{ label: "Default", value: "default" },
 		{ label: "Astrological sign", value: "astrology" },
-		{ label: "Most common", value: "common" },
-		{ label: "Feb 29", value: "february" },
 		{ label: "Holidays", value: "holidays" },
 		{ label: "Bad actor", value: "bad" },
 		{ label: "Today's birthdays", value: "today" }
 	];
 
 	const sendBroadcast = ({ channel, event, payload }) => {
-		if (
-			(channel === userChannel && !userChannelConnected) ||
-			(channel === demoChannel && !demoChannelConnected)
-		)
-			return null;
+		if (channel === demoChannel && !demoChannelConnected) return null;
 
 		channel.send({
 			type: "broadcast",
@@ -51,13 +43,8 @@
 	$: groupBy, updateGroupBy();
 
 	const updateView = async () => {
-		if (!userChannel || !demoChannel) return;
+		if (!demoChannel) return;
 
-		sendBroadcast({
-			channel: userChannel,
-			event: "view",
-			payload: view
-		});
 		sendBroadcast({
 			channel: demoChannel,
 			event: "view",
@@ -94,17 +81,11 @@
 	};
 
 	onMount(async () => {
-		userChannel = supabase.channel("user");
 		demoChannel = supabase.channel("demo");
 
-		[userChannel, demoChannel].forEach((channel) => {
-			channel.subscribe((status) => {
-				if (status !== "SUBSCRIBED") return null;
-				else {
-					if (channel === userChannel) userChannelConnected = true;
-					if (channel === demoChannel) demoChannelConnected = true;
-				}
-			});
+		demoChannel.subscribe((status) => {
+			if (status !== "SUBSCRIBED") return null;
+			else demoChannelConnected = true;
 		});
 
 		birthdays = await load({ table: "birthdays" });
@@ -120,9 +101,6 @@
 
 	<button class="red">Use article data</button>
 
-	<div>
-		User Channel: {userChannelConnected ? "Connected ✅" : "Not connected 🚫"}
-	</div>
 	<div>
 		Demo Channel: {demoChannelConnected ? "Connected ✅" : "Not connected 🚫"}
 	</div>
