@@ -1,5 +1,6 @@
 <script>
 	import Default from "$components/Birthdays.Default.svelte";
+	import Distribution from "$components/Birthdays.Distribution.svelte";
 	import Astrology from "$components/Birthdays.Astrology.svelte";
 	import Common from "$components/Birthdays.Common.svelte";
 	import Today from "$components/Birthdays.Today.svelte";
@@ -50,6 +51,8 @@
 <div class="chart">
 	{#if groupBy === "default"}
 		<Default {birthdays} />
+	{:else if groupBy === "distribution"}
+		<Distribution {birthdays} />
 	{:else if groupBy === "astrology"}
 		<Astrology {birthdays} />
 	{:else if groupBy === "common"}

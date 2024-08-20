@@ -48,7 +48,7 @@
 </div>
 
 <Lineup
-	title={`Simulation of size ${data?.length}`}
+	title={`${data?.length} random XOXO attendees`}
 	subtitle={"Will there be a birthday match?"}
 	{data}
 />

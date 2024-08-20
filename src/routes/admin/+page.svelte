@@ -24,6 +24,7 @@
 	];
 	const groupOptions = [
 		{ label: "Default", value: "default" },
+		{ label: "Distribution", value: "distribution" },
 		{ label: "Astrological sign", value: "astrology" },
 		{ label: "Holidays", value: "holidays" },
 		{ label: "Bad actor", value: "bad" },
