@@ -5,11 +5,37 @@
 	import Today from "$components/Birthdays.Today.svelte";
 	import BadActors from "$components/Birthdays.BadActors.svelte";
 	import February from "$components/Birthdays.February.svelte";
+	import Holidays  from "$components/Birthdays.Holidays.svelte"
 	import { base } from "$app/paths";
 	import _ from "lodash";
 
 	export let birthdays = [];
 	export let groupBy;
+
+	let zero = "0";
+
+	// $: console.log(groupBy)
+
+	// function getRandomMonthDay() {
+	// 	const month = Math.floor(Math.random() * 12); // Months are 0-11
+	// 	const day = Math.floor(Math.random() * 31) + 1; // Days are 1-31 (will be adjusted for month validity)
+		
+	// 	// Create a date object to handle month/day overflow automatically
+	// 	const date = new Date(2024, month, day); // Year is arbitrary, used to create a valid date
+
+	// 	return { month: date.getMonth() + 1, day: date.getDate() }; // Return month/day as an object
+	// }
+
+	// const n = 600; // Replace with the desired number of random dates
+	// const manyBirthdays = Array.from({ length: n }, () => getRandomMonthDay());
+	
+	// birthdays = manyBirthdays.map(d => {
+	// 	return {
+	// 		first_name: "matt daniels here togegther",
+	// 		birthday: `2024-${d.month < 10 ? zero.concat(d.month) : d.month}-${d.day < 10 ? zero.concat(d.day) : d.day}`
+	// 	}
+	// })
+
 </script>
 
 <div class="website" class:visible={groupBy !== "today"}>
@@ -26,6 +52,8 @@
 		<Astrology {birthdays} />
 	{:else if groupBy === "common"}
 		<Common {birthdays} />
+	{:else if groupBy === "holidays"}
+		<Holidays {birthdays} />
 	{:else if groupBy === "today"}
 		<Today {birthdays} />
 	{:else if groupBy === "february"}
