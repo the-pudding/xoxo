@@ -5,7 +5,7 @@
 	import Today from "$components/Birthdays.Today.svelte";
 	import BadActors from "$components/Birthdays.BadActors.svelte";
 	import February from "$components/Birthdays.February.svelte";
-	import Holidays  from "$components/Birthdays.Holidays.svelte"
+	import Holidays from "$components/Birthdays.Holidays.svelte";
 	import { base } from "$app/paths";
 	import _ from "lodash";
 
@@ -19,7 +19,7 @@
 	// function getRandomMonthDay() {
 	// 	const month = Math.floor(Math.random() * 12); // Months are 0-11
 	// 	const day = Math.floor(Math.random() * 31) + 1; // Days are 1-31 (will be adjusted for month validity)
-		
+
 	// 	// Create a date object to handle month/day overflow automatically
 	// 	const date = new Date(2024, month, day); // Year is arbitrary, used to create a valid date
 
@@ -28,23 +28,23 @@
 
 	// const n = 600; // Replace with the desired number of random dates
 	// const manyBirthdays = Array.from({ length: n }, () => getRandomMonthDay());
-	
+
 	// birthdays = manyBirthdays.map(d => {
 	// 	return {
 	// 		first_name: "matt daniels here togegther",
 	// 		birthday: `2024-${d.month < 10 ? zero.concat(d.month) : d.month}-${d.day < 10 ? zero.concat(d.day) : d.day}`
 	// 	}
 	// })
-
 </script>
 
 <div class="text">
 	<h2>
-		Text your first name + birthday to <strong>866-404-0072</strong>
+		Text <strong>866-404-0072</strong>
 	</h2>
-	<div>Like this:</div>
-	<h3><span>Matt 1/31</span></h3>
-	<h3><span>Michelle 6/13</span></h3>
+	<h2 class="demo">[your first name] [MM/DD]</h2>
+	<div class="example">For example:</div>
+	<h3>Matt 01/31</h3>
+	<h3>Michelle 06/13</h3>
 </div>
 
 <div class="chart">
@@ -86,11 +86,18 @@
 		flex-direction: column;
 		align-items: center;
 	}
-	.text span {
-		background: #fab5ae;
-		padding: 0 4px;
-	}
+	h2,
 	h3 {
 		margin: 0;
+	}
+	h3 {
+		font-family: var(--mono);
+	}
+	.demo {
+		padding: 0 4px;
+		font-family: var(--mono);
+	}
+	.example {
+		margin-top: 2rem;
 	}
 </style>
