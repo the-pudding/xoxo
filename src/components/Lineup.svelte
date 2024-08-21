@@ -22,6 +22,7 @@
 	export let xTicks = dateTicks;
 	export let formatTick = (d) => timeFormat("%b %d")(d);
 	export let showMatches = true;
+	export let walkDuration;
 
 	const yKey = "id";
 	const parseDate = (d) => timeParse("%Y-%m-%d")(d);
@@ -34,7 +35,7 @@
 </script>
 
 <div class="histogram">
-	{#if title}<div class="title">{title}</div>{/if}
+	{#if title && data.length}<div class="title">{title}</div>{/if}
 	{#if subtitle}<div class="subtitle">{subtitle}</div>{/if}
 
 	<div class="chart-container">
@@ -56,7 +57,7 @@
 					baseline={true}
 				/>
 				{#if data.length > 0}
-					<People {showMatches} />
+					<People {showMatches} {walkDuration} />
 				{/if}
 			</Html>
 		</LayerCake>
@@ -70,6 +71,7 @@
 	.chart-container {
 		width: 100%;
 		height: 300px;
+		overflow: hidden;
 	}
 	.title {
 		font-size: 1.5rem;

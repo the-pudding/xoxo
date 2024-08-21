@@ -3,6 +3,7 @@
 	import { getContext } from "svelte";
 
 	export let showMatches;
+	export let walkDuration;
 
 	const { data, xGet } = getContext("LayerCake");
 
@@ -14,5 +15,5 @@
 	{@const left = $xGet(d) + "px"}
 	{@const color = colors[i % colors.length]}
 	{@const isMatch = showMatches && d.hasMatch}
-	<Person {name} {left} {color} {isMatch} />
+	<Person {i} id={d.id} {name} {left} {color} {isMatch} {walkDuration} />
 {/each}

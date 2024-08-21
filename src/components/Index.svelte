@@ -13,11 +13,13 @@
 	let view;
 	let groupBy;
 	let simulationData;
+	let simulationSpeed;
 
 	const receiveMessage = (msg) => {
 		if (msg.event === "view") {
 			view = msg.payload;
 		} else if (msg.event === "simulation-n") {
+			simulationSpeed = msg.payload.speed;
 			simulationData = msg.payload.birthdays;
 			simulationData = simulationData.map((d) => ({
 				...d,
@@ -84,7 +86,7 @@
 	{#if view === "birthdays"}
 		<Birthdays {birthdays} {groupBy} />
 	{:else if view === "simulation"}
-		<Simulation data={simulationData} />
+		<Simulation data={simulationData} speed={simulationSpeed} />
 	{/if}
 </div>
 

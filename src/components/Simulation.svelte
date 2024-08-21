@@ -4,35 +4,42 @@
 	import { utcFormat } from "d3-time-format";
 
 	export let data;
+	export let speed;
 
-	let successes = 0;
-	let numSimulations = 0;
 	const timeFormatter = utcFormat("%B %d");
 
-	$: data, trackRound();
+	let showBanner = false;
 
-	const trackRound = () => {
-		if (!data) return;
-		if (data.some((d) => d.hasMatch)) {
-			successes += 1;
-		}
-		numSimulations += 1;
+	const reset = () => {
+		if (!data || !data.length) return;
+
+		showBanner = false;
+		setTimeout(() => {
+			setTimeout(() => {
+				showBanner = true;
+			}, walkDuration + 1000);
+		}, 100);
 	};
 
+	$: data, reset();
 	$: matches = data
 		? _.groupBy(
 				data.filter((d) => d.hasMatch),
 				"birthday"
 			)
 		: {};
+	$: sortedMatchDates = Object.keys(matches).sort(
+		(a, b) => Date.parse(a) - Date.parse(b)
+	);
 	$: numMatches = matches ? Object.keys(matches).length : 0;
+	$: walkDuration = speed === "fast" ? 5000 : 10000;
 </script>
 
-<div class="title">
+<div class="banner" class:visible={showBanner && data.length}>
 	{#if numMatches > 0}
 		<h2>{numMatches} {numMatches > 1 ? "matches" : "match"}!</h2>
 		<div class="matches">
-			{#each Object.keys(matches) as date}
+			{#each sortedMatchDates as date}
 				{@const people = matches[date]}
 				<div class="match">
 					<div class="date">{timeFormatter(new Date(date))}</div>
@@ -51,16 +58,23 @@
 	title={`${data?.length} random XOXO attendees`}
 	subtitle={"Will there be a birthday match?"}
 	{data}
+	{walkDuration}
 />
 
 <style>
-	.title {
+	.banner {
 		display: flex;
+		opacity: 0;
 		width: 100%;
 		justify-content: space-evenly;
 		background: var(--color-gray-100);
 		margin-bottom: 1rem;
 		padding: 0.5rem;
+		transition: opacity 0s;
+	}
+	.banner.visible {
+		transition: opacity 0.5s;
+		opacity: 1;
 	}
 	.matches {
 		display: flex;

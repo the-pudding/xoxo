@@ -13,7 +13,6 @@
 	const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
 	let view;
-	let simulationN;
 	let groupBy;
 	let birthdays;
 	let demoChannel;
@@ -68,15 +67,27 @@
 			id: 1
 		});
 	};
-	const runSimulation = () => {
+	const runSimulation = (n, speed) => {
 		if (!demoChannel) return;
 
-		const simulationData = _.sampleSize(birthdays, simulationN);
+		let simulationData;
+		if (speed === "slow") {
+			// Michelle and Matt are always in this simulation
+			simulationData = [
+				...birthdays.filter((d) => d.id === 1 || d.id === 2),
+				..._.sampleSize(
+					birthdays.filter((d) => d.id !== 1 && d.id !== 2),
+					n - 2
+				)
+			];
+		} else {
+			simulationData = _.sampleSize(birthdays, n);
+		}
 
 		sendBroadcast({
 			channel: demoChannel,
 			event: "simulation-n",
-			payload: { n: simulationN, birthdays: simulationData }
+			payload: { birthdays: simulationData, speed: speed }
 		});
 	};
 	const clearDb = async () => {
@@ -84,8 +95,8 @@
 		await insert({
 			table: "birthdays",
 			data: [
-				{ first_name: "matt", birthday: new Date("2024-01-31") },
-				{ first_name: "michelle", birthday: new Date("2024-06-13") }
+				{ id: 1, first_name: "matt", birthday: new Date("2024-01-31") },
+				{ id: 2, first_name: "michelle", birthday: new Date("2024-06-13") }
 			]
 		});
 	};
@@ -106,7 +117,6 @@
 				birthday: new Date(randomBirthday)
 			};
 		});
-		console.log({ toInsert });
 		await insert({ table: "birthdays", data: toInsert });
 	};
 	const articleData = () => {};
@@ -161,10 +171,11 @@
 	{/if}
 
 	{#if view === "simulation"}
-		<div class="input">
-			<div>Simulation with N people</div>
-			<input type="number" bind:value={simulationN} placeholder="N" />
-			<button on:click={runSimulation}>Run</button>
+		<div>
+			<strong>Run simulation</strong>
+			<button on:click={() => runSimulation(50, "slow")}>50 slow</button>
+			<button on:click={() => runSimulation(50, "fast")}>50</button>
+			<button on:click={() => runSimulation(25, "fast")}>25</button>
 		</div>
 	{/if}
 

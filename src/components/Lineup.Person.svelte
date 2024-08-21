@@ -2,17 +2,19 @@
 	import { onMount } from "svelte";
 	import { base } from "$app/paths";
 
+	export let i;
+	export let id;
 	export let name;
 	export let left;
 	export let color;
 	export let isMatch;
+	export let walkDuration;
 
 	const frameRate = 100;
-	const walkDuration = 5000;
 
 	let frame;
 	let frameI = 0;
-	let delay;
+	let delay = 0;
 	const standingFrame = { x: 0, y: 0 };
 	const matchFrame = { x: -32, y: 0 };
 	const walkingFrames = [
@@ -31,7 +33,11 @@
 			entered = true;
 		}, 100);
 
-		delay = Math.random() * 850;
+		if (walkDuration === 5000) {
+			delay = Math.random() * 850;
+		} else if (walkDuration === 10000) {
+			delay = Math.random() * 6000;
+		}
 
 		const interval = setInterval(() => {
 			frameI = (frameI + 1) % walkingFrames.length;
@@ -49,19 +55,12 @@
 	});
 </script>
 
-<!-- <div
-	class="rect"
-	class:entered
-	style:left
-	style="position: absolute; bottom: 0; height: 200px; background: cornflowerblue; border: 1px solid black; width: 37px"
-/> -->
-
 <div
 	class="group"
 	class:entered
+	class:done
 	class:fade={done && !isMatch}
-	style:left
-	style={`--walk-dur: ${walkDuration}ms; --walk-delay: ${delay}ms;`}
+	style={`--left: ${left}; --walk-dur: ${walkDuration}ms; --walk-delay: ${delay}ms;`}
 >
 	<div class="label">{name}</div>
 	<div
@@ -77,18 +76,19 @@
 		display: flex;
 		flex-direction: column;
 		align-items: center;
-		transform: translate(-100vw, 0);
+		left: -100px;
+		transform: translate(-16px, 0);
 		transition:
-			transform var(--walk-dur) var(--walk-delay) ease-in-out,
+			left var(--walk-dur) var(--walk-delay) ease-in-out,
 			opacity 0.5s;
 	}
 	.entered {
-		transform: translate(0, 0);
+		left: var(--left);
 	}
 	.fade {
 		opacity: 0.1;
 	}
-	.fade .label {
+	.done .label {
 		opacity: 0;
 	}
 	.person {
@@ -99,6 +99,7 @@
 		background-image: var(--img);
 	}
 	.label {
+		transition: opacity 0.5s;
 		font-size: 0.75rem;
 	}
 </style>
