@@ -2,10 +2,9 @@
 	import Default from "$components/Birthdays.Default.svelte";
 	import Distribution from "$components/Birthdays.Distribution.svelte";
 	import Astrology from "$components/Birthdays.Astrology.svelte";
-	import Common from "$components/Birthdays.Common.svelte";
 	import Today from "$components/Birthdays.Today.svelte";
+	import Names from "$components/Birthdays.Names.svelte";
 	import BadActors from "$components/Birthdays.BadActors.svelte";
-	import February from "$components/Birthdays.February.svelte";
 	import Holidays from "$components/Birthdays.Holidays.svelte";
 	import _ from "lodash";
 
@@ -30,14 +29,12 @@
 		<Distribution {birthdays} />
 	{:else if groupBy === "astrology"}
 		<Astrology {birthdays} />
-	{:else if groupBy === "common"}
-		<Common {birthdays} />
 	{:else if groupBy === "holidays"}
 		<Holidays {birthdays} />
 	{:else if groupBy === "today"}
 		<Today {birthdays} />
-	{:else if groupBy === "february"}
-		<February {birthdays} />
+	{:else if groupBy === "names"}
+		<Names {birthdays} />
 	{:else if groupBy === "bad"}
 		<BadActors {birthdays} />
 	{/if}

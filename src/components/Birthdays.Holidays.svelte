@@ -12,7 +12,8 @@
 	$: vday = birthdays.filter(({ birthday }) => birthday === "2024-02-14");
 </script>
 
-<div class="holidays">
+<div class="title">Holiday babies</div>
+<div id="holidays">
 	{#if christmas.length > 0}
 		<div class="holiday" id="christmas">
 			<h2>
@@ -63,8 +64,14 @@
 </div>
 
 <style>
-	.holidays {
+	#holidays {
 		display: flex;
+	}
+
+	.title {
+		font-size: 2rem;
+		font-weight: bold;
+		text-align: center;
 	}
 
 	.holiday h2 {

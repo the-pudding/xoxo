@@ -27,8 +27,9 @@
 		{ label: "Distribution", value: "distribution" },
 		{ label: "Astrological sign", value: "astrology" },
 		{ label: "Holidays", value: "holidays" },
+		{ label: "Names", value: "names" },
 		{ label: "Bad actor", value: "bad" },
-		{ label: "Today's birthdays", value: "today" }
+		{ label: "This weekend bdays", value: "today" }
 	];
 	const thisWeekend = ["2024-08-22", "2024-08-23", "2024-08-24", "2024-08-25"];
 
