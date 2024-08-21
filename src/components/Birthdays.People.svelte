@@ -12,7 +12,7 @@
 	{#each birthdays as { first_name }}
 		{@const color = _.sample(colors)}
 		<div class="person-group">
-			<div>{first_name.length > 10 ? first_name.slice(0,10).concat("...") : first_name}</div>
+			<div>{first_name}</div>
 			<div
 				class="person"
 				class:hat={hats}

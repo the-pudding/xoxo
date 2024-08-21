@@ -5,7 +5,7 @@
 
 	export let birthdays;
 
-	let fontScale = scaleLinear().domain([50,2]).range([10,48]).clamp(true);
+	let fontScale = scaleLinear().domain([50, 2]).range([10, 48]).clamp(true);
 
 	const colors = [
 		"var(--color-red)",
@@ -24,8 +24,11 @@
 	<h2><strong>{birthdays.length} birthdays</strong> so far</h2>
 	<div class="names">
 		{#each birthdays as { first_name, birthday }}
-			<div class="name" style={`--color: ${_.sample(colors)}; font-size:${fontScale(birthdays.length)}px;`}>
-				{first_name.length > 10 ? first_name.slice(0,10).concat("...") : first_name} - {dateFormatter(new Date(birthday)).toLowerCase()}
+			<div
+				class="name"
+				style={`--color: ${_.sample(colors)}; font-size:${fontScale(birthdays.length)}px;`}
+			>
+				{first_name} - {dateFormatter(new Date(birthday)).toLowerCase()}
 			</div>
 		{/each}
 	</div>

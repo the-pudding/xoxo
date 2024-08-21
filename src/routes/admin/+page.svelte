@@ -73,13 +73,24 @@
 
 		let simulationData;
 		if (speed === "slow") {
-			// Michelle and Matt are always in this simulation
-			simulationData = [
-				...birthdays.filter((d) => d.id === 1 || d.id === 2),
-				..._.sampleSize(
+			let sample;
+			let isMatch = false;
+
+			while (!isMatch) {
+				sample = _.sampleSize(
 					birthdays.filter((d) => d.id !== 1 && d.id !== 2),
 					n - 2
-				)
+				);
+				isMatch =
+					sample.filter((d) =>
+						sample.some((m) => m.birthday === d.birthday && m.id !== d.id)
+					).length > 0;
+				console.log({ sample, isMatch });
+			}
+
+			simulationData = [
+				...birthdays.filter((d) => d.id === 1 || d.id === 2),
+				...sample
 			];
 		} else {
 			simulationData = _.sampleSize(birthdays, n);

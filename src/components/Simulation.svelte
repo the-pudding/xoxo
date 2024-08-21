@@ -14,10 +14,13 @@
 		if (!data || !data.length) return;
 
 		showBanner = false;
+
 		setTimeout(() => {
+			const bannerWait = walkDuration === 10000 ? 22000 : walkDuration;
+
 			setTimeout(() => {
 				showBanner = true;
-			}, walkDuration + 1000);
+			}, bannerWait);
 		}, 100);
 	};
 

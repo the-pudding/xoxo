@@ -114,5 +114,8 @@
 	.label {
 		transition: opacity 0.5s;
 		font-size: 0.75rem;
+		position: absolute;
+		top: 0;
+		transform: translate(0, -100%);
 	}
 </style>
