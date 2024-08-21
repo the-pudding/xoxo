@@ -28,30 +28,43 @@
 	let done = false;
 
 	onMount(() => {
-		frame = standingFrame;
-		setTimeout(() => {
+		done = false;
+
+		if (walkDuration === 10000 && (id === 1 || id === 2)) {
 			entered = true;
-		}, 100);
 
-		if (walkDuration === 5000) {
-			delay = Math.random() * 850;
-		} else if (walkDuration === 10000) {
-			delay = Math.random() * 6000;
+			setTimeout(() => {
+				if (isMatch) frame = matchFrame;
+				else frame = standingFrame;
+				done = true;
+			}, walkDuration);
+		} else {
+			frame = standingFrame;
+			setTimeout(() => {
+				entered = true;
+			}, 100);
+
+			if (walkDuration === 5000) {
+				delay = Math.random() * 850;
+			} else if (walkDuration === 10000) {
+				if (i === 2 || i === 3 || i === 4 || i === 5) delay = 0;
+				else delay = 6000 + Math.random() * 6000;
+			}
+
+			const interval = setInterval(() => {
+				frameI = (frameI + 1) % walkingFrames.length;
+				frame = walkingFrames[frameI];
+			}, frameRate);
+
+			setTimeout(() => {
+				clearInterval(interval);
+
+				if (isMatch) frame = matchFrame;
+				else frame = standingFrame;
+
+				done = true;
+			}, walkDuration + delay);
 		}
-
-		const interval = setInterval(() => {
-			frameI = (frameI + 1) % walkingFrames.length;
-			frame = walkingFrames[frameI];
-		}, frameRate);
-
-		setTimeout(() => {
-			clearInterval(interval);
-
-			if (isMatch) frame = matchFrame;
-			else frame = standingFrame;
-
-			done = true;
-		}, walkDuration + delay);
 	});
 </script>
 
