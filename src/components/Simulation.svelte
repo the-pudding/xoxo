@@ -80,6 +80,7 @@
 		opacity: 1;
 	}
 	.matches {
+		font-size: 1.3rem;
 		display: flex;
 		flex-wrap: wrap;
 		gap: 1rem;
