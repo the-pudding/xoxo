@@ -12,14 +12,14 @@
 	$: vday = birthdays.filter(({ birthday }) => birthday === "2024-02-14");
 </script>
 
-<div class="title">Holiday babies</div>
+<h2 class="title">Holiday babies</h2>
 <div id="holidays">
 	{#if newyears.length > 0}
 		<div class="holiday" id="newyears">
-			<h2>
+			<h3>
 				🪩 <strong>{newyears.length}</strong> <strong>New Year&rsquo;s</strong>
 				{newyears.length == 1 ? "baby" : "babies"}
-			</h2>
+			</h3>
 			<div class="people-wrapper">
 				<People birthdays={newyears} />
 			</div>
@@ -28,10 +28,10 @@
 
 	{#if vday.length > 0}
 		<div class="holiday" id="vday">
-			<h2>
+			<h3>
 				💘 <strong>{vday.length}</strong> <strong>Valentine&rsquo;s Day</strong>
 				{vday.length == 1 ? "baby" : "babies"}
-			</h2>
+			</h3>
 			<div class="people-wrapper">
 				<People birthdays={vday} />
 			</div>
@@ -40,10 +40,10 @@
 
 	{#if halloween.length > 0}
 		<div class="holiday" id="halloween">
-			<h2>
+			<h3>
 				🎃 <strong>{halloween.length}</strong> <strong>Halloween</strong>
 				{halloween.length == 1 ? "baby" : "babies"}
-			</h2>
+			</h3>
 			<div class="people-wrapper">
 				<People birthdays={halloween} />
 			</div>
@@ -52,10 +52,10 @@
 
 	{#if christmas.length > 0}
 		<div class="holiday" id="christmas">
-			<h2>
+			<h3>
 				🎄 <strong>{christmas.length}</strong> <strong>Christmas</strong>
 				{christmas.length == 1 ? "baby" : "babies"}
-			</h2>
+			</h3>
 			<div class="people-wrapper">
 				<People birthdays={christmas} />
 			</div>
@@ -69,14 +69,12 @@
 		justify-content: space-evenly;
 	}
 
-	.title {
-		font-size: 2rem;
+	h2 {
 		font-weight: bold;
 		text-align: center;
 	}
 
-	.holiday h2 {
-		font-size: 20px;
+	h3 {
 		padding: 0 20px;
 		text-align: center;
 	}

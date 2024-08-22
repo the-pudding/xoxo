@@ -35,7 +35,7 @@
 </script>
 
 <div class="histogram">
-	{#if title && data.length}<div class="title">{title}</div>{/if}
+	{#if title && data.length}<h2 class="title">{title}</h2>{/if}
 	{#if subtitle}<div class="subtitle">{subtitle}</div>{/if}
 
 	<div class="chart-container">
@@ -70,16 +70,17 @@
 	}
 	.chart-container {
 		width: 100%;
-		height: 300px;
+		height: 350px;
 		overflow: hidden;
 	}
 	.title {
-		font-size: 1.5rem;
+		font-size: 1.75rem;
 		font-weight: bold;
 	}
 	.subtitle {
 		color: var(--color-gray-800);
 		margin: 0.5rem 0;
 		margin-bottom: 1rem;
+		font-size: 1.3rem;
 	}
 </style>

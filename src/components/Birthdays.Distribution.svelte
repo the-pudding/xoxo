@@ -61,7 +61,7 @@
 		height: 400px;
 	}
 	.title {
-		font-size: 1.5rem;
+		font-size: 1.75rem;
 		font-weight: bold;
 		margin-bottom: 1rem;
 	}

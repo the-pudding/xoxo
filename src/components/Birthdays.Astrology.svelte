@@ -81,7 +81,7 @@
 		font-size: 14px;
 	}
 	.title {
-		font-size: 1.5rem;
+		font-size: 1.75rem;
 		font-weight: bold;
 	}
 	.subtitle {

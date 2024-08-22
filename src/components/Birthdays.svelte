@@ -76,9 +76,9 @@
 	}
 	.demo {
 		padding: 0 4px;
-		font-family: var(--mono);
 	}
 	.example {
-		margin-top: 2rem;
+		font-size: 1.5rem;
+		margin-top: 1rem;
 	}
 </style>

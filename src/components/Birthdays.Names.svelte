@@ -11,7 +11,7 @@
 </script>
 
 <div id="names">
-	<div class="title">Most common names</div>
+	<h2 class="title">Most common names</h2>
 	{#each mostCommonNames as name}
 		{@const nameBirthdays = birthdays.filter(
 			({ first_name }) => first_name === name
@@ -28,13 +28,7 @@
 		flex-direction: column;
 		align-items: center;
 	}
-	h2 {
-		font-size: 20px;
-		padding: 0 20px;
-		text-align: center;
-	}
 	.title {
-		font-size: 2rem;
 		font-weight: bold;
 		text-align: center;
 	}

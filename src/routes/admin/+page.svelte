@@ -126,7 +126,7 @@
 		});
 	};
 	const populateRandom = async (n) => {
-		const toInsert = _.times(n, () => {
+		const toInsert = _.times(n, (i) => {
 			const start = new Date(2024, 0, 1);
 			const end = new Date(2024, 11, 31);
 			const date = new Date(
@@ -141,6 +141,7 @@
 				birthday: new Date(randomBirthday)
 			};
 		});
+		console.log({ toInsert });
 		await insert({ table: "birthdays", data: toInsert });
 	};
 	const useArticleData = () => {

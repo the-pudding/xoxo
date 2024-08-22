@@ -100,7 +100,7 @@
 <style>
 	.page {
 		width: 100%;
-		max-width: 1000px;
+		padding: 1rem 3rem;
 		margin: 0 auto;
 		display: flex;
 		flex-direction: column;

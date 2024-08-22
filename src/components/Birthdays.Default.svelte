@@ -5,7 +5,7 @@
 
 	export let birthdays;
 
-	let fontScale = scaleLinear().domain([50, 2]).range([10, 48]).clamp(true);
+	let fontScale = scaleLinear().domain([50, 2]).range([14, 48]).clamp(true);
 
 	const colors = [
 		"var(--color-red)",
@@ -16,8 +16,6 @@
 	];
 
 	const dateFormatter = utcFormat("%b %-d");
-
-	//const birthdaysFiltered = birthdays.slice(0,100)
 </script>
 
 <div class="default">
