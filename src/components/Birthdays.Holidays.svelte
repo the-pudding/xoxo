@@ -14,30 +14,6 @@
 
 <div class="title">Holiday babies</div>
 <div id="holidays">
-	{#if christmas.length > 0}
-		<div class="holiday" id="christmas">
-			<h2>
-				🎅 <strong>{christmas.length}</strong> <strong>Christmas</strong>
-				{christmas.length == 1 ? "baby" : "babies"}
-			</h2>
-			<div class="people-wrapper">
-				<People birthdays={christmas} />
-			</div>
-		</div>
-	{/if}
-
-	{#if halloween.length > 0}
-		<div class="holiday" id="halloween">
-			<h2>
-				🎃 <strong>{halloween.length}</strong> <strong>Halloween</strong>
-				{halloween.length == 1 ? "baby" : "babies"}
-			</h2>
-			<div class="people-wrapper">
-				<People birthdays={halloween} />
-			</div>
-		</div>
-	{/if}
-
 	{#if newyears.length > 0}
 		<div class="holiday" id="newyears">
 			<h2>
@@ -61,11 +37,36 @@
 			</div>
 		</div>
 	{/if}
+
+	{#if halloween.length > 0}
+		<div class="holiday" id="halloween">
+			<h2>
+				🎃 <strong>{halloween.length}</strong> <strong>Halloween</strong>
+				{halloween.length == 1 ? "baby" : "babies"}
+			</h2>
+			<div class="people-wrapper">
+				<People birthdays={halloween} />
+			</div>
+		</div>
+	{/if}
+
+	{#if christmas.length > 0}
+		<div class="holiday" id="christmas">
+			<h2>
+				🎄 <strong>{christmas.length}</strong> <strong>Christmas</strong>
+				{christmas.length == 1 ? "baby" : "babies"}
+			</h2>
+			<div class="people-wrapper">
+				<People birthdays={christmas} />
+			</div>
+		</div>
+	{/if}
 </div>
 
 <style>
 	#holidays {
 		display: flex;
+		justify-content: space-evenly;
 	}
 
 	.title {
