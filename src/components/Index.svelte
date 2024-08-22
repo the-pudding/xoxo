@@ -29,6 +29,8 @@
 			}));
 		} else if (msg.event === "groupBy") {
 			groupBy = msg.payload;
+		} else if (msg.event === "new-data-source") {
+			birthdays = msg.payload;
 		}
 	};
 	const handleBirthdayChange = (payload) => {
@@ -54,6 +56,9 @@
 			.on("broadcast", { event: "groupBy" }, (payload) =>
 				receiveMessage(payload)
 			)
+			.on("broadcast", { event: "new-data-source" }, (payload) =>
+				receiveMessage(payload)
+			)
 			.subscribe();
 
 		birthdays = await load({ table: "birthdays" });
@@ -77,8 +82,10 @@
 			.subscribe();
 
 		const dbView = await load({ table: "state" });
-		view = dbView[0].view;
-		groupBy = dbView[0].groupBy;
+		if (dbView && dbView.length) {
+			view = dbView[0].view;
+			groupBy = dbView[0].groupBy;
+		}
 	});
 </script>
 

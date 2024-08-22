@@ -1,10 +1,11 @@
 <script>
-	import BadActor from "$routes/admin/BadActor.svelte";
 	import Demo from "$components/Index.svelte";
 	import ButtonSet from "$components/helpers/ButtonSet.svelte";
 	import { load, update, insert, clear } from "$utils/supabase.js";
 	import { createClient } from "@supabase/supabase-js";
 	import { onMount } from "svelte";
+	import { utcFormat } from "d3-time-format";
+	import articleData from "$data/article.json";
 	import names from "$data/names.json";
 	import _ from "lodash";
 
@@ -17,6 +18,7 @@
 	let birthdays;
 	let demoChannel;
 	let demoChannelConnected = false;
+	let usingArticleData = false;
 
 	const viewOptions = [
 		{ label: "Gather birthdays", value: "birthdays" },
@@ -33,6 +35,18 @@
 	];
 	const thisWeekend = ["2024-08-22", "2024-08-23", "2024-08-24", "2024-08-25"];
 
+	const handleBirthdayChange = (payload) => {
+		if (payload.eventType === "INSERT") {
+			birthdays = [...birthdays, payload.new];
+		} else if (payload.eventType === "UPDATE") {
+			birthdays = [
+				...birthdays.filter((d) => d.id !== payload.new.id),
+				payload.new
+			];
+		} else if (payload.eventType === "DELETE") {
+			birthdays = birthdays.filter((d) => d.id !== payload.old.id);
+		}
+	};
 	const sendBroadcast = ({ channel, event, payload }) => {
 		if (channel === demoChannel && !demoChannelConnected) return null;
 
@@ -72,7 +86,7 @@
 		if (!demoChannel) return;
 
 		let simulationData;
-		if (speed === "slow") {
+		if (speed === "slow" && !usingArticleData) {
 			let sample;
 			let isMatch = false;
 
@@ -85,7 +99,6 @@
 					sample.filter((d) =>
 						sample.some((m) => m.birthday === d.birthday && m.id !== d.id)
 					).length > 0;
-				console.log({ sample, isMatch });
 			}
 
 			simulationData = [
@@ -114,7 +127,6 @@
 	};
 	const populateRandom = async (n) => {
 		const toInsert = _.times(n, () => {
-			const randomName = _.sample(names);
 			const start = new Date(2024, 0, 1);
 			const end = new Date(2024, 11, 31);
 			const date = new Date(
@@ -125,27 +137,56 @@
 			const randomBirthday = `2024-${month}-${day}`;
 
 			return {
-				first_name: randomName,
+				first_name: names[i % names.length],
 				birthday: new Date(randomBirthday)
 			};
 		});
 		await insert({ table: "birthdays", data: toInsert });
 	};
-	const articleData = () => {};
+	const useArticleData = () => {
+		if (usingArticleData) return;
+
+		usingArticleData = true;
+		birthdays = articleData;
+		sendBroadcast({
+			channel: demoChannel,
+			event: "new-data-source",
+			payload: articleData
+		});
+	};
 
 	onMount(async () => {
 		demoChannel = supabase.channel("demo");
-
 		demoChannel.subscribe((status) => {
 			if (status !== "SUBSCRIBED") return null;
 			else demoChannelConnected = true;
 		});
 
 		birthdays = await load({ table: "birthdays" });
+		supabase
+			.channel("birthdays")
+			.on(
+				"postgres_changes",
+				{ event: "INSERT", schema: "public", table: "birthdays" },
+				handleBirthdayChange
+			)
+			.on(
+				"postgres_changes",
+				{ event: "UPDATE", schema: "public", table: "birthdays" },
+				handleBirthdayChange
+			)
+			.on(
+				"postgres_changes",
+				{ event: "DELETE", schema: "public", table: "birthdays" },
+				handleBirthdayChange
+			)
+			.subscribe();
 
 		const dbView = await load({ table: "state" });
-		view = dbView[0].view;
-		groupBy = dbView[0].groupBy;
+		if (dbView && dbView.length) {
+			view = dbView[0].view;
+			groupBy = dbView[0].groupBy;
+		}
 	});
 
 	$: view, updateView();
@@ -169,8 +210,8 @@
 	<div>
 		<strong>Database</strong>
 		<button on:click={clearDb}>Clear DB</button>
-		<button on:click={() => populateRandom(600)}>600 random</button>
-		<button on:click={articleData} class="red">Use article data</button>
+		<button on:click={() => populateRandom(600)}>Add 600 to DB</button>
+		<button on:click={useArticleData} class="red">Use article data</button>
 	</div>
 
 	{#if view === "birthdays"}
@@ -179,7 +220,12 @@
 			options={groupOptions}
 			bind:value={groupBy}
 		/>
-		<p>{birthdaysThisWeekend.length} birthdays this weekend.</p>
+		<p>
+			{birthdaysThisWeekend.length} birthdays this weekend. {birthdaysThisWeekend.length >
+			0
+				? "✅"
+				: "❌"}
+		</p>
 	{/if}
 
 	{#if view === "simulation"}
@@ -190,8 +236,6 @@
 			<button on:click={() => runSimulation(25, "fast")}>25</button>
 		</div>
 	{/if}
-
-	<BadActor {birthdays} />
 
 	<hr />
 
