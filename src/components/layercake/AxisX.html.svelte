@@ -109,7 +109,7 @@
 		height: 100%;
 	}
 	.tick {
-		font-size: 11px;
+		font-size: 16px;
 	}
 
 	.gridline {

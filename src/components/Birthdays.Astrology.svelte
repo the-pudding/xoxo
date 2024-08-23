@@ -77,9 +77,6 @@
 		width: 100%;
 		height: 400px;
 	}
-	:global(#astrology .tick) {
-		font-size: 14px;
-	}
 	.title {
 		font-size: 1.75rem;
 		font-weight: bold;
