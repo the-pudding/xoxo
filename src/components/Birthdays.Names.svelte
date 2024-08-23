@@ -6,6 +6,7 @@
 
 	$: counts = _.countBy(birthdays, "first_name");
 	$: mostCommonNames = _.keys(counts)
+		.filter((d) => counts[d] > 1)
 		.sort((a, b) => counts[b] - counts[a])
 		.slice(0, 3);
 </script>

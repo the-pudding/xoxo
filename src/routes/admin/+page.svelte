@@ -195,6 +195,21 @@
 	$: birthdaysThisWeekend = birthdays
 		? birthdays.filter((d) => thisWeekend.includes(d.birthday))
 		: [];
+	$: counts = _.countBy(birthdays, "first_name");
+	$: mostCommonNames = _.keys(counts)
+		.filter((d) => counts[d] > 1)
+		.sort((a, b) => counts[b] - counts[a])
+		.slice(0, 3);
+	$: holidayBabies = birthdays
+		? birthdays.filter(
+				({ birthday }) =>
+					birthday === "2024-01-01" ||
+					birthday === "2024-02-14" ||
+					birthday === "2024-10-31" ||
+					birthday === "2024-12-25"
+			)
+		: [];
+	$: badActors = birthdays ? birthdays.filter((d) => d.bad) : [];
 </script>
 
 <div class="page">
@@ -221,6 +236,20 @@
 			options={groupOptions}
 			bind:value={groupBy}
 		/>
+
+		<p>
+			{holidayBabies.length} holiday babies. {holidayBabies.length > 0
+				? "✅"
+				: "❌"}
+		</p>
+		<p>
+			{mostCommonNames.length} common names. {mostCommonNames.length > 0
+				? "✅"
+				: "❌"}
+		</p>
+		<p>
+			{badActors.length} bad actors. {badActors.length > 0 ? "✅" : "❌"}
+		</p>
 		<p>
 			{birthdaysThisWeekend.length} birthdays this weekend. {birthdaysThisWeekend.length >
 			0
@@ -265,6 +294,9 @@
 	}
 	div {
 		margin: 1rem 0;
+	}
+	p {
+		margin: 0.5rem 0;
 	}
 	hr {
 		width: 100%;
