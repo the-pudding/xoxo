@@ -113,7 +113,7 @@
 	}
 	.label {
 		transition: opacity 0.5s;
-		font-size: 0.75rem;
+		font-size: 1rem;
 		position: absolute;
 		top: 0;
 		transform: translate(0, -100%);

@@ -16,7 +16,7 @@
 	<h2>
 		Text <strong>866-404-0072</strong>
 	</h2>
-	<h2 class="demo">[your first name] [MM/DD]</h2>
+	<h2 class="demo"><span>your first name</span> <span>MM/DD</span></h2>
 	<div class="example">For example:</div>
 	<h3>Matt 01/31</h3>
 	<h3>Michelle 06/13</h3>
@@ -41,6 +41,9 @@
 </div>
 
 <style>
+	h2 {
+		font-size: 4rem;
+	}
 	h2,
 	h4 {
 		text-align: center;
@@ -72,6 +75,7 @@
 		margin: 0;
 	}
 	h3 {
+		font-size: 2.5rem;
 		font-family: var(--mono);
 	}
 	.demo {
@@ -80,5 +84,9 @@
 	.example {
 		font-size: 1.5rem;
 		margin-top: 1rem;
+	}
+	span {
+		background: var(--color-gray-300);
+		padding: 0 4px;
 	}
 </style>

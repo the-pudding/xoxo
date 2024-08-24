@@ -25,11 +25,13 @@
 		align-items: center;
 	}
 	h2 {
+		font-size: 4rem;
 		font-weight: bold;
 		text-align: center;
-		margin-bottom: 2rem;
+		margin-bottom: 4rem;
 	}
 	h3 {
-		margin-top: 2rem;
+		font-size: 3rem;
+		margin-top: 4rem;
 	}
 </style>

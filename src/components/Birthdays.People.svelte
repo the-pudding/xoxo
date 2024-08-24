@@ -57,7 +57,6 @@
 		background-position: -32px 0;
 	}
 	.date {
-		font-size: 0.8rem;
 		margin-top: 0.5rem;
 	}
 	.today {

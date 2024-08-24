@@ -3,10 +3,17 @@
 	import Header from "$components/Header.svelte";
 </script>
 
-<Header />
+<!-- 
+<Header /> -->
 
 <main id="content">
 	<div class="page">
 		<slot />
 	</div>
 </main>
+
+<style>
+	main {
+		margin-top: 2rem;
+	}
+</style>
